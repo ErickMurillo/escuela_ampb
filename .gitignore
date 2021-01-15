@@ -46,6 +46,7 @@ This is the .gitignore generated automatically by Android Studio, hope that this
 **/doc/api/
 .dart_tool/
 .flutter-plugins
+.flutter-plugins-dependencies
 .packages
 .pub-cache/
 .pub/
