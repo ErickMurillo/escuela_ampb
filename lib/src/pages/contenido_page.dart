@@ -18,13 +18,13 @@ class ContenidoPage extends StatefulWidget {
 }
 
 class _ContenidoPageState extends State<ContenidoPage> {
-    
-    
-    
-    
+
+
+
+
     @override
     Widget build(BuildContext context) {
-        
+
         Contenido detalleContenido = ModalRoute.of(context).settings.arguments;
         return Scaffold(
             appBar: AppBar(
@@ -32,73 +32,20 @@ class _ContenidoPageState extends State<ContenidoPage> {
             ),
             body: introducionCurso(detalleContenido)
         );
-        //print(detalleContenido.titulo);
 
-        // Future getContenidos() async {
-
-        //     List<Contenido> contenidonull = List<Contenido> ();
-
-        //     Contenido contenidoId = await DBProvider.db.getContenidoId(1);
-            
-        //     if (contenidoId == null) {
-
-        //         //print('es null');
-        //         return contenidonull;
-        //     }
-
-        //     //print(contenido[0].titulo);
-        //     //print(contenidoId.titulo);
-
-        //     //return contenido;
-        //     return contenidoId;
-        // }
-        
-        
-        // return FutureBuilder(
-        //     future: getContenidos(),
-        //     builder: (BuildContext context, AsyncSnapshot snapshot) {
-        //         if (snapshot.hasData) {
-        //             return Scaffold(
-        //                 appBar: AppBar(
-        //                     title: Text(snapshot.data.titulo),
-        //                 ),
-        //                 body: introducionCurso(snapshot.data)
-        //             );
-        //         } else {
-
-        //             return Scaffold(
-        //                 body: Center(
-        //                     child: CircularProgressIndicator(),
-        //                 ),
-        //             );
-
-        //         }
-                
-        //     },
-        // );
-        
     }
 
     Widget introducionCurso(Contenido contenido){
         return SingleChildScrollView(
-            
+
             child: Column(
                 children: [
-                    // Container(
-                    //     padding: EdgeInsets.symmetric(vertical: 20.0),
-                    //     child: Text(
-                    //         contenido.titulo, 
-                    //         style: TextStyle(
-                    //         color: Colors.black,
-                    //         fontWeight: FontWeight.bold,
-                    //         fontSize: 30)
-                    //     ),
-                    // ),
+
                     Html(
                         data: _getimg(contenido.contenido),
                         customRender: {
                             "img": (RenderContext context, Widget child, attributes, _)  {
-                            
+
                                 //File filetoimg = File(_.attributes['src']);
                                 String _imgBody = _.attributes['src'];
 
@@ -107,7 +54,7 @@ class _ContenidoPageState extends State<ContenidoPage> {
                                     placeholder: (context, url) => Center(child: CircularProgressIndicator(),),
                                     errorWidget: (context, url, error) => Icon(Icons.error),
                                 );
-                                
+
                             },
                         },
                     ),

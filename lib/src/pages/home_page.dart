@@ -13,7 +13,7 @@ import 'package:escuela_ampb/src/providers/modulo_provider.dart';
 class HomePage extends StatefulWidget {
     HomePage({Key key}) : super(key: key);
 
-    
+
     @override
     _HomePageState createState() => _HomePageState();
 }
@@ -42,34 +42,6 @@ class _HomePageState extends State<HomePage> {
 
             return allCursos;
         }
-
-        // Future getModulos() async {
-        //     List<Modulo> modulos = await DBProvider.db.getTodosModulos();
-        //     //Modulo moduloId = await DBProvider.db.getModuloId(3);
-
-        //     //print(moduloId.titulo);
-
-        //     return modulos;
-        // }
-
-        // Future getContenidos() async {
-
-        //     //List<Contenido> contenido = await DBProvider.db.getTodosContenidos();
-        //     Contenido contenidoId = await DBProvider.db.getContenidoId(2);
-
-        //     //print(contenido[0].titulo);
-        //     print(contenidoId.titulo);
-
-        //     //return contenido;
-        //     return contenidoId;
-        // }
-
-
-        //getContenidos();
-        //getModulos();
-        //getData();
-        //return Scaffold(body: Center(child: Text('hola'),),);
-        //print(cursosProvider);
         return FutureBuilder(
             future: getData(),
             builder: (BuildContext context, AsyncSnapshot snapshot) {
@@ -87,17 +59,14 @@ class _HomePageState extends State<HomePage> {
                 }
             },
         );
-        
 
-    
+
+
     }
 
     Widget  _listaDeCursos(List cursos, BuildContext context){
         return ListView.builder(
             itemBuilder: (context, index) {
-                // return Card(
-                //     child: Text(cursos[index].titulo),
-                // );
                 return _cardCurso(cursos[index]);
             },
             shrinkWrap: true,
@@ -111,7 +80,6 @@ class _HomePageState extends State<HomePage> {
     Widget  _cardCurso(Curso curso){
 
         String urlImg = baseUrl + curso.imagen;
-        //print(urlImg);
 
         return GestureDetector(
             child: Card(

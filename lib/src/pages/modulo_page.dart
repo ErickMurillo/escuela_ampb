@@ -22,54 +22,26 @@ class ModuloList extends StatefulWidget {
 
 class _ModuloListState extends State<ModuloList> {
 
-    
+
     List<int> idsModulos = List<int>();
-
-    //bool _loadData;
-    //int prueba;
-    
-    // @override
-    // void initState() { 
-    //     super.initState();
-    //     _loadData = false;
-    //     prueba = 0;
-    // }
-
-    // Future <Curso> getCurso() async {
-
-    //     Curso cursoUno = await DBProvider.db.getCursoId(idCurso);
-    //     if (cursoUno == null) {
-    //         print("no existe");
-    //     } else {
-    //         return cursoUno;
-    //     } 
-    // }
-
-    
 
     @override
     Widget build(BuildContext context) {
-        //getFilterContenidos();
         List cursoDetalle = ModalRoute.of(context).settings.arguments;
         int cursoid = cursoDetalle[0];
         String cursoName = cursoDetalle[1];
-        //print(cursoid);
-        //print(cursoName);
 
         Future getFilterModulos() async {
             List<Modulo> filterModulos = List<Modulo>();
-            List<Contenido> filterContenidos = List<Contenido>();   
+            List<Contenido> filterContenidos = List<Contenido>();
 
             filterModulos = await DBProvider.db.filterModuloIdCurso(cursoid);
-            filterModulos.forEach((item) { 
-                //print(item.titulo);
+            filterModulos.forEach((item) {
                 idsModulos.add(item.id);
             });
 
             filterContenidos = await DBProvider.db.filterContenidoIdModulo(idsModulos);
 
-            
-            //print(filterModulos.runtimeType);
             return [filterModulos, filterContenidos];
         }
 
@@ -77,13 +49,8 @@ class _ModuloListState extends State<ModuloList> {
             future: getFilterModulos(),
             builder: (BuildContext context, AsyncSnapshot snapshot) {
                 if (snapshot.hasData) {
-
-                    //Curso uncurso = snapshot.data[0];
                     var listModulos = snapshot.data[0];
                     var listContenido = snapshot.data[1];
-                    //listModulos.forEach((item)=>print(item.titulo));
-                    
-
                     return Scaffold(
                         appBar: AppBar(
                             title: Text(cursoName),
@@ -95,7 +62,7 @@ class _ModuloListState extends State<ModuloList> {
                                 )
                             ],
                         ),
-                        //body:  introducionCurso(uncurso),
+
                         body: SingleChildScrollView(
                             child: Container(
                             padding: EdgeInsets.symmetric(horizontal: 20.0),
@@ -106,17 +73,13 @@ class _ModuloListState extends State<ModuloList> {
                                 ),
                             ),
                         ),
-                                
-                            
-                    
 
-                     
                     );
                 } else {
                     return Scaffold(
                         body: Center(
                             child: CircularProgressIndicator()
-                        ),   
+                        ),
                     );
                 }
             },
@@ -126,13 +89,13 @@ class _ModuloListState extends State<ModuloList> {
 
     Widget introducionCurso(Curso curso){
         return SingleChildScrollView(
-            
+
             child: Column(
                 children: [
                     Container(
                         padding: EdgeInsets.symmetric(vertical: 20.0),
                         child: Text(
-                            curso.titulo, 
+                            curso.titulo,
                             style: TextStyle(
                             color: Colors.black,
                             fontWeight: FontWeight.bold,
@@ -143,7 +106,7 @@ class _ModuloListState extends State<ModuloList> {
                         data: _getimg(curso.descripcion),
                         customRender: {
                             "img": (RenderContext context, Widget child, attributes, _)  {
-                            
+
                                 //File filetoimg = File(_.attributes['src']);
                                 String _imgBody = _.attributes['src'];
 
@@ -152,7 +115,7 @@ class _ModuloListState extends State<ModuloList> {
                                     placeholder: (context, url) => Center(child: CircularProgressIndicator(),),
                                     errorWidget: (context, url, error) => Icon(Icons.error),
                                 );
-                                
+
                             },
                         },
                     ),
@@ -200,7 +163,7 @@ class _ModuloListState extends State<ModuloList> {
         List<Widget> lisItem = List<Widget>();
         //print(idModulo);
         for (var item in contenido) {
-           
+
             if (item.modulo == idModulo) {
                 //print(item.titulo);
                 lisItem.add(
@@ -211,15 +174,12 @@ class _ModuloListState extends State<ModuloList> {
                         onTap: () => Navigator.pushNamed(context, 'contenido', arguments: item),
                     )
                 );
-                
+
             }
-            
-            
-            
+
+
+
         }
-        //print(lisItem);
-        
-        //print(a);
 
         return Column(children:lisItem,);
     }
