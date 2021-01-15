@@ -68,7 +68,9 @@ class _ModuloListState extends State<ModuloList> {
                             padding: EdgeInsets.symmetric(horizontal: 20.0),
                                 child: Column(
                                     children: <Widget>[
+                                      introducionCurso(cursoid),
                                         _cardmodulo(listModulos, listContenido, context),
+                                        
                                     ],
                                 ),
                             ),
@@ -87,39 +89,56 @@ class _ModuloListState extends State<ModuloList> {
 
     }
 
-    Widget introducionCurso(Curso curso){
+    Widget introducionCurso(int curso){
+
+        final filterCurso = DBProvider.db.getCursoId(curso);
+        print("curso desde la pagina");
+        print(filterCurso);
         return SingleChildScrollView(
 
-            child: Column(
-                children: [
-                    Container(
-                        padding: EdgeInsets.symmetric(vertical: 20.0),
-                        child: Text(
-                            curso.titulo,
-                            style: TextStyle(
-                            color: Colors.black,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 30)
-                        ),
-                    ),
-                    Html(
-                        data: _getimg(curso.descripcion),
-                        customRender: {
-                            "img": (RenderContext context, Widget child, attributes, _)  {
+            child: FutureBuilder(
+              future: filterCurso,
+              builder: (BuildContext context, AsyncSnapshot<Curso> snapshot) {
+                if ( snapshot.hasData ) {
+                  final Curso curso = snapshot.data;
+                  print("Detalle del curso");
+                  print(curso.titulo);
+                  return Column(
+                    children: [
+                      Container(
+                          padding: EdgeInsets.symmetric(vertical: 20.0),
+                          child: Text(
+                              curso.titulo ,
+                              style: TextStyle(
+                              color: Colors.black,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 30)
+                          ),
+                      ),
+                      Html(
+                          data: _getimg(curso.descripcion),
+                          customRender: {
+                              "img": (RenderContext context, Widget child, attributes, _)  {
 
-                                //File filetoimg = File(_.attributes['src']);
-                                String _imgBody = _.attributes['src'];
+                                  //File filetoimg = File(_.attributes['src']);
+                                  String _imgBody = _.attributes['src'];
 
-                                return CachedNetworkImage(
-                                    imageUrl: _imgBody,
-                                    placeholder: (context, url) => Center(child: CircularProgressIndicator(),),
-                                    errorWidget: (context, url, error) => Icon(Icons.error),
-                                );
+                                  return CachedNetworkImage(
+                                      imageUrl: _imgBody,
+                                      placeholder: (context, url) => Center(child: CircularProgressIndicator(),),
+                                      errorWidget: (context, url, error) => Icon(Icons.error),
+                                  );
 
-                            },
-                        },
-                    ),
-                ],
+                              },
+                          },
+                      ),
+                  ],
+              );
+                } else {
+                  return CircularProgressIndicator();
+                } 
+                
+               }, 
             )
         );
     }
@@ -137,12 +156,12 @@ class _ModuloListState extends State<ModuloList> {
                 final cardCurso = Card(
                     child: Column(
                         children: <Widget>[
-                        Text('Modulo ${modulo[index].titulo} -- ${modulo[index].id}'),
+                        Text('${modulo[index].titulo} -- ${modulo[index].id}'),
                         SizedBox(
                             height: 20.0,
                         ),
                         _prueba(modulo[index].id, contenido, context)
-                        //Text(cursos[index].descripcion),
+                        
                         ],
                     ),
                 );

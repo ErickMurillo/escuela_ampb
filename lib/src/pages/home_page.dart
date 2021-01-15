@@ -1,3 +1,4 @@
+import 'dart:io';
 
 import 'package:flutter/material.dart';
 
@@ -35,17 +36,22 @@ class _HomePageState extends State<HomePage> {
         Future getData() async {
             resCurso = await cursoProvider.getCursos();
             resModulo = await moduloProvider.getModulos();
-            resContenido = await contenidoProvider.getContenidos();
+            //resContenido = await contenidoProvider.getContenidos();
             List<Curso> allCursos = await DBProvider.db.getTodosCursos();
 
-            //print(allCursos[1].titulo);
+            print("cuantos cursos regresa");
+            print(allCursos.length);
 
             return allCursos;
+            
         }
         return FutureBuilder(
             future: getData(),
             builder: (BuildContext context, AsyncSnapshot snapshot) {
                 if (snapshot.hasData) {
+                  print("Existe datos");
+                  print(snapshot.data);
+                  
                     return Scaffold(
                         appBar: AppBar(
                             title: Text("Lista de Cursos"),
@@ -65,6 +71,8 @@ class _HomePageState extends State<HomePage> {
     }
 
     Widget  _listaDeCursos(List cursos, BuildContext context){
+        print(cursos);
+        print("alla arriba salen los cursos");
         return ListView.builder(
             itemBuilder: (context, index) {
                 return _cardCurso(cursos[index]);
@@ -80,7 +88,7 @@ class _HomePageState extends State<HomePage> {
     Widget  _cardCurso(Curso curso){
 
         String urlImg = baseUrl + curso.imagen;
-
+        
         return GestureDetector(
             child: Card(
                 child: Column(
