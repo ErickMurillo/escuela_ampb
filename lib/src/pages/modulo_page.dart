@@ -1,4 +1,5 @@
 
+import 'package:escuela_ampb/src/providers/contenido_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:flutter_html/html_parser.dart';
@@ -22,7 +23,8 @@ class ModuloList extends StatefulWidget {
 
 class _ModuloListState extends State<ModuloList> {
 
-
+    ContenidoProvider contenidoProvider =  ContenidoProvider();
+    dynamic resContenido;
     List<int> idsModulos = List<int>();
 
     @override
@@ -56,9 +58,17 @@ class _ModuloListState extends State<ModuloList> {
                             title: Text(cursoName),
                             actions: [
                                 IconButton(
-                                    icon: Icon(Icons.autorenew ,color: Colors.white,),
+                                    icon: Icon(Icons.download_sharp ,color: Colors.white,),
                                     tooltip: 'Descargar Curso',
-                                    onPressed: (){},
+                                    onPressed: () async {
+                                      resContenido = await contenidoProvider.getContenidos(cursoid);
+                                      print("Descargar contenido");
+                                      
+                                      
+                                      setState(() {
+                                        
+                                      });
+                                    },
                                 )
                             ],
                         ),
@@ -92,8 +102,8 @@ class _ModuloListState extends State<ModuloList> {
     Widget introducionCurso(int curso){
 
         final filterCurso = DBProvider.db.getCursoId(curso);
-        print("curso desde la pagina");
-        print(filterCurso);
+        //print("curso desde la pagina");
+        //print(filterCurso);
         return SingleChildScrollView(
 
             child: FutureBuilder(
@@ -101,8 +111,8 @@ class _ModuloListState extends State<ModuloList> {
               builder: (BuildContext context, AsyncSnapshot<Curso> snapshot) {
                 if ( snapshot.hasData ) {
                   final Curso curso = snapshot.data;
-                  print("Detalle del curso");
-                  print(curso.titulo);
+                  //print("Detalle del curso");
+                  //print(curso.titulo);
                   return Column(
                     children: [
                       Container(
@@ -168,7 +178,9 @@ class _ModuloListState extends State<ModuloList> {
                 //print(modulo[index].id);
                 return GestureDetector(
                 child: cardCurso,
-                onTap: () => {},
+                onTap: () {
+                  print("click modulo");
+                },
                 );
             },
             shrinkWrap: true,

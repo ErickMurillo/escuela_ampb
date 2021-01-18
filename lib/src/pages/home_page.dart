@@ -27,7 +27,7 @@ class _HomePageState extends State<HomePage> {
     String baseUrl = 'http://ampb.caps-nicaragua.org';
     dynamic resCurso;
     dynamic resModulo;
-    dynamic resContenido;
+    //dynamic resContenido;
 
     @override
     Widget build(BuildContext context) {
@@ -39,8 +39,8 @@ class _HomePageState extends State<HomePage> {
             //resContenido = await contenidoProvider.getContenidos();
             List<Curso> allCursos = await DBProvider.db.getTodosCursos();
 
-            print("cuantos cursos regresa");
-            print(allCursos.length);
+            //print("cuantos cursos regresa");
+            //print(allCursos.length);
 
             return allCursos;
             
@@ -49,8 +49,8 @@ class _HomePageState extends State<HomePage> {
             future: getData(),
             builder: (BuildContext context, AsyncSnapshot snapshot) {
                 if (snapshot.hasData) {
-                  print("Existe datos");
-                  print(snapshot.data);
+                  //print("Existe datos");
+                  //print(snapshot.data);
                   
                     return Scaffold(
                         appBar: AppBar(
@@ -71,8 +71,8 @@ class _HomePageState extends State<HomePage> {
     }
 
     Widget  _listaDeCursos(List cursos, BuildContext context){
-        print(cursos);
-        print("alla arriba salen los cursos");
+        //print(cursos);
+        //print("alla arriba salen los cursos");
         return ListView.builder(
             itemBuilder: (context, index) {
                 return _cardCurso(cursos[index]);

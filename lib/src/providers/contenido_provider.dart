@@ -10,8 +10,8 @@ class ContenidoProvider{
 
     String baseUrl = 'http://ampb.caps-nicaragua.org';
 
-    Future<List<Contenido>> getContenidos() async {
-        var url = baseUrl + "/aprende/api/contenidos/";
+    Future<List<Contenido>> getContenidos(int id) async {
+        var url = baseUrl + "/aprende/api/contenidos/filtro/${id}";
         Response response = await Dio(BaseOptions(
             connectTimeout: 5000,
             receiveTimeout: 100000,
@@ -24,7 +24,7 @@ class ContenidoProvider{
 
 
         return (decode as List).map((contenido) {
-            print('Inserting $contenido');
+            //print('Inserting $contenido');
             DBProvider.db.insertContenido(Contenido.fromJson(contenido));
         }).toList();
         // final contenido = new Contenidos.fromJsonList(decode);

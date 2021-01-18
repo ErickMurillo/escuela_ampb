@@ -101,7 +101,7 @@ class DBProvider{
         
             final res = await db.update('Modulo', nuevoModulo.toJson(), where: 'id = ?', whereArgs: [nuevoModulo.id]);
             final prueba = nuevoModulo.id;
-            print('No actualizo el id: $prueba');
+            //print('No actualizo el id: $prueba');
             return res;
             
             
@@ -121,7 +121,7 @@ class DBProvider{
         if (pregunta.isNotEmpty) {
             final res = await db.update('Contenido', nuevoContenido.toJson(), where: 'id = ?', whereArgs: [nuevoContenido.id]);
             final prueba = nuevoContenido.id;
-            print('No actualizo el id: $prueba');
+            //print('No actualizo el id: $prueba');
             return res;           
             
         } else {
@@ -234,7 +234,7 @@ class DBProvider{
     //ingresar registros
     nuevoCurso(Curso nuevoCurso) async{
         final db = await database;
-        print(nuevoCurso.id);
+        //print(nuevoCurso.id);
         final res = await db.insert('Curso', nuevoCurso.toJson());
         return res;
     }
@@ -242,7 +242,7 @@ class DBProvider{
     //Actualizar Registros
     Future<int> updateCurso(Curso nuevoCurso) async{
         final db = await database;
-        print(nuevoCurso.id);
+        //print(nuevoCurso.id);
         final res = await db.update('Curso', nuevoCurso.toJson(), where: 'id = ?', whereArgs: [nuevoCurso.id]);
         return res;
     }
