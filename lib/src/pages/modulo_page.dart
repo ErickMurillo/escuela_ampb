@@ -1,4 +1,6 @@
 
+import 'dart:io';
+
 import 'package:escuela_ampb/src/providers/contenido_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
@@ -6,11 +8,13 @@ import 'package:flutter_html/html_parser.dart';
 
 import 'package:html/parser.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:path/path.dart' as p;
 
 import 'package:escuela_ampb/src/models/contenido_model.dart';
 import 'package:escuela_ampb/src/models/curso_model.dart';
 import 'package:escuela_ampb/src/models/modulo_model.dart';
 import 'package:escuela_ampb/src/providers/DBProvider.dart';
+import 'package:network_to_file_image/network_to_file_image.dart';
 
 
 
@@ -98,6 +102,11 @@ class _ModuloListState extends State<ModuloList> {
         );
 
     }
+    Directory _appDocsDir;
+    File fileFromDocsDir(String filename) {
+      String pathName = p.join(_appDocsDir.path, filename);
+      return File(pathName);
+    }
 
     Widget introducionCurso(int curso){
 
@@ -138,6 +147,13 @@ class _ModuloListState extends State<ModuloList> {
                                       placeholder: (context, url) => Center(child: CircularProgressIndicator(),),
                                       errorWidget: (context, url, error) => Icon(Icons.error),
                                   );
+                                  // return Image(
+                                  //   image: NetworkToFileImage(
+                                  //     url:_imgBody,
+                                  //     file: fileFromDocsDir("flutter${curso.id}.png"),
+                                  //     debug: true,
+                                  //   ),
+                                  // );
 
                               },
                           },
