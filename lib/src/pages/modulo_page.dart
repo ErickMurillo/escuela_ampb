@@ -14,7 +14,7 @@ import 'package:escuela_ampb/src/models/contenido_model.dart';
 import 'package:escuela_ampb/src/models/curso_model.dart';
 import 'package:escuela_ampb/src/models/modulo_model.dart';
 import 'package:escuela_ampb/src/providers/DBProvider.dart';
-import 'package:network_to_file_image/network_to_file_image.dart';
+//import 'package:network_to_file_image/network_to_file_image.dart';
 
 
 
@@ -67,10 +67,10 @@ class _ModuloListState extends State<ModuloList> {
                                     onPressed: () async {
                                       resContenido = await contenidoProvider.getContenidos(cursoid);
                                       print("Descargar contenido");
-                                      
-                                      
+
+
                                       setState(() {
-                                        
+
                                       });
                                     },
                                 )
@@ -84,7 +84,7 @@ class _ModuloListState extends State<ModuloList> {
                                     children: <Widget>[
                                       introducionCurso(cursoid),
                                         _cardmodulo(listModulos, listContenido, context),
-                                        
+
                                     ],
                                 ),
                             ),
@@ -162,9 +162,9 @@ class _ModuloListState extends State<ModuloList> {
               );
                 } else {
                   return CircularProgressIndicator();
-                } 
-                
-               }, 
+                }
+
+               },
             )
         );
     }
@@ -187,7 +187,7 @@ class _ModuloListState extends State<ModuloList> {
                             height: 20.0,
                         ),
                         _prueba(modulo[index].id, contenido, context)
-                        
+
                         ],
                     ),
                 );

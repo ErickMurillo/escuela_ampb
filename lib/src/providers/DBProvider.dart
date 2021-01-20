@@ -65,7 +65,7 @@ class DBProvider{
             }
         );
 
-    
+
     }
 
     insertCurso(Curso nuevoCurso) async{
@@ -75,7 +75,7 @@ class DBProvider{
             // final res = await db.update('Curso', nuevoCurso.toJson(), where: 'id = ?', whereArgs: [nuevoCurso.id]);
             // return res;
             final flag = await db.query('Curso', where: 'fecha = ? AND id = ?', whereArgs: [nuevoCurso.fecha, nuevoCurso.id]);
-            
+
             if(!flag.isNotEmpty){
                 final res = await db.update('Curso', nuevoCurso.toJson(), where: 'id = ?', whereArgs: [nuevoCurso.id]);
                 //final prueba = nuevoCurso.id;
@@ -85,10 +85,10 @@ class DBProvider{
                 //final prueba = nuevoCurso.id;
                 //print('no se actualizo id: $prueba');
             }
-            
-            
+
+
         } else {
-            
+
             final res = await db.insert('Curso', nuevoCurso.toJson());
             return res;
         }
@@ -98,15 +98,15 @@ class DBProvider{
         final db = await database;
         final pregunta = await db.query('Modulo', where: 'id = ?', whereArgs: [nuevoModulo.id]);
         if (pregunta.isNotEmpty) {
-        
+
             final res = await db.update('Modulo', nuevoModulo.toJson(), where: 'id = ?', whereArgs: [nuevoModulo.id]);
-            final prueba = nuevoModulo.id;
+            //final prueba = nuevoModulo.id;
             //print('No actualizo el id: $prueba');
             return res;
-            
-            
+
+
         } else {
-            
+
             final res = await db.insert('Modulo', nuevoModulo.toJson());
             //final prueba = nuevoModulo.id;
            //print('se inserto el id: $prueba');
@@ -120,10 +120,10 @@ class DBProvider{
         final pregunta = await db.query('Contenido', where: 'id = ?', whereArgs: [nuevoContenido.id]);
         if (pregunta.isNotEmpty) {
             final res = await db.update('Contenido', nuevoContenido.toJson(), where: 'id = ?', whereArgs: [nuevoContenido.id]);
-            final prueba = nuevoContenido.id;
+            //final prueba = nuevoContenido.id;
             //print('No actualizo el id: $prueba');
-            return res;           
-            
+            return res;
+
         } else {
             final res = await db.insert('Contenido', nuevoContenido.toJson());
             //final prueba = nuevoContenido.id;
@@ -160,7 +160,7 @@ class DBProvider{
         List <Curso> list = res.isNotEmpty
                                     ? res.map((e) => Curso.fromJson(e)).toList()
                                     : [];
-        
+
         return list;
     }
 
@@ -171,7 +171,7 @@ class DBProvider{
         List <Modulo> list = res.isNotEmpty
                                     ? res.map((e) => Modulo.fromJson(e)).toList()
                                     : [];
-        
+
         return list;
     }
 
@@ -182,7 +182,7 @@ class DBProvider{
         List <Contenido> list = res.isNotEmpty
                                     ? res.map((e) => Contenido.fromJson(e)).toList()
                                     : [];
-        
+
         return list;
     }
 
@@ -194,7 +194,7 @@ class DBProvider{
         String myQuery= "SELECT * FROM Modulo WHERE curso = $id ORDER BY orden ASC";
 
         final res = await db.rawQuery(myQuery);
-        
+
         //final res = await db.query('Modulo', where: 'curso = ?', whereArgs: [id]);
         List <Modulo> list = res.isNotEmpty
                                     ? res.map((e) => Modulo.fromJson(e)).toList()
@@ -220,7 +220,7 @@ class DBProvider{
         //   print(item);
         // }
 
-        
+
 
 
         //final res = await db.query('Contenido', where: 'modulo = ?', whereArgs: [id]);

@@ -1,4 +1,4 @@
-import 'dart:io';
+//import 'dart:io';
 
 import 'package:flutter/material.dart';
 
@@ -43,7 +43,7 @@ class _HomePageState extends State<HomePage> {
             //print(allCursos.length);
 
             return allCursos;
-            
+
         }
         return FutureBuilder(
             future: getData(),
@@ -51,7 +51,7 @@ class _HomePageState extends State<HomePage> {
                 if (snapshot.hasData) {
                   //print("Existe datos");
                   //print(snapshot.data);
-                  
+
                     return Scaffold(
                         appBar: AppBar(
                             title: Text("Lista de Cursos"),
@@ -88,7 +88,7 @@ class _HomePageState extends State<HomePage> {
     Widget  _cardCurso(Curso curso){
 
         String urlImg = baseUrl + curso.imagen;
-        
+
         return GestureDetector(
             child: Card(
                 child: Column(
