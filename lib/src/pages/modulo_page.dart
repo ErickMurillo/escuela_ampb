@@ -147,13 +147,6 @@ class _ModuloListState extends State<ModuloList> {
                                       placeholder: (context, url) => Center(child: CircularProgressIndicator(),),
                                       errorWidget: (context, url, error) => Icon(Icons.error),
                                   );
-                                  // return Image(
-                                  //   image: NetworkToFileImage(
-                                  //     url:_imgBody,
-                                  //     file: fileFromDocsDir("flutter${curso.id}.png"),
-                                  //     debug: true,
-                                  //   ),
-                                  // );
 
                               },
                           },
