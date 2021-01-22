@@ -1,5 +1,7 @@
 //import 'dart:io';
 
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 
 import 'package:cached_network_image/cached_network_image.dart';
@@ -24,7 +26,7 @@ class _HomePageState extends State<HomePage> {
     CursoProvider cursoProvider = CursoProvider();
     ModuloProvider moduloProvider =  ModuloProvider();
     ContenidoProvider contenidoProvider =  ContenidoProvider();
-    String baseUrl = 'http://ampb.caps-nicaragua.org';
+    //String baseUrl = 'http://ampb.caps-nicaragua.org';
     dynamic resCurso;
     dynamic resModulo;
     //dynamic resContenido;
@@ -87,17 +89,21 @@ class _HomePageState extends State<HomePage> {
 
     Widget  _cardCurso(Curso curso){
 
-        String urlImg = baseUrl + curso.imagen;
-
+        //String urlImg = baseUrl + curso.imagen;
+        File urlImg = File('/data/user/0/ni.org.simas.escuela_ampb/app_flutter/cursos_${curso.id}.jpg');
         return GestureDetector(
             child: Card(
                 child: Column(
                     children: <Widget>[
-                        CachedNetworkImage(
-                            imageUrl: urlImg,
-                            placeholder: (context, url) => CircularProgressIndicator(),
-                            errorWidget: (context, url, error) => Icon(Icons.error),
-                        ),
+                      Container(
+                        child: (urlImg == null) ? 'assets/prueba.jpg' : Image.file(urlImg)),
+                      
+                      
+                        // CachedNetworkImage(
+                        //     imageUrl: urlImg,
+                        //     placeholder: (context, url) => CircularProgressIndicator(),
+                        //     errorWidget: (context, url, error) => Icon(Icons.error),
+                        // ),
                         Text(curso.titulo),
                     ],
                 ),

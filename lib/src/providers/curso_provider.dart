@@ -16,6 +16,7 @@ import 'package:flutter/services.dart';
 import 'package:image_downloader/image_downloader.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:path/path.dart';
+import 'package:http/http.dart' show get;
 
 
 
@@ -41,12 +42,12 @@ class CursoProvider{
 
         print("printing the decode");
         for (var item in decode) {
-          //var imageResponse = await Dio().get(baseUrl+item['imagen']);
+         
           print(baseUrl+item['imagen']);
           var rutaImg = baseUrl+item['imagen'];
-          //saveFile(item['id'], rutaImg);
-          //readFile(item['id'], rutaImg);
-          _saveLocalPath(item['id'], rutaImg);
+          var newImg = _saveImage(rutaImg, item['id']);
+          print(newImg);
+          
         }
 
         return (decode as List).map((curso) {
@@ -57,40 +58,17 @@ class CursoProvider{
     }
 }
 
-Future<String> _saveLocalPath(int id, String urlImg) async {
-  // Directory documentsDirectory = await getApplicationDocumentsDirectory();
-  // String appImagenPath = documentsDirectory.path;
-  // String filePath = '$appImagenPath/demoTextFile.txt';
-  try {
-  // Saved with this method.
-    var imageId = await ImageDownloader.downloadImage(urlImg);
-    if (imageId == null) {
-      return "Error no hubo imagen";
+Future _saveImage(String imgUrl, int id) async {
+    var response = await get(imgUrl);
+    var documentDirectory = await getApplicationDocumentsDirectory();
+    File file = File(join(documentDirectory.path, 'cursos_$id.jpg'));
+    file.writeAsBytesSync(response.bodyBytes);
+    //print(response);
+    //print(response.bodyBytes);
+    print(documentDirectory);
+    print(file);
+    return file;
   }
-
-  // Below is a method of obtaining saved image information.
-  var fileName = await ImageDownloader.findName(imageId);
-  var path = await ImageDownloader.findPath(imageId);
-  var size = await ImageDownloader.findByteSize(imageId);
-  var mimeType = await ImageDownloader.findMimeType(imageId);
-    } on PlatformException catch (error) {
-      print(error);
-    }
-
-return 'aqui la info';
-}
-
-void saveFile(int id, String urlImg) async {
-    File file = File(await _saveLocalPath(id,urlImg)); // 1
-    file.writeAsString("This is my demo text $id that will be saved to $urlImg: demoTextFile.txt"); // 2
-  }
-
-void readFile(int id, String urlImg) async {
-    File file = File(await _saveLocalPath(id,urlImg)); // 1
-    String fileContent = await file.readAsString(); // 2
-
-    print('File Content: $fileContent');
-}
 
 
 
