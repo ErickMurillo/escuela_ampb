@@ -44,8 +44,9 @@ class CursoProvider{
           //var imageResponse = await Dio().get(baseUrl+item['imagen']);
           print(baseUrl+item['imagen']);
           var rutaImg = baseUrl+item['imagen'];
-          saveFile(item['id'], rutaImg);
-          readFile(item['id'], rutaImg);
+          //saveFile(item['id'], rutaImg);
+          //readFile(item['id'], rutaImg);
+          _saveLocalPath(item['id'], rutaImg);
         }
 
         return (decode as List).map((curso) {
@@ -75,8 +76,8 @@ Future<String> _saveLocalPath(int id, String urlImg) async {
     } on PlatformException catch (error) {
       print(error);
     }
-  
-return 'áqui la info';
+
+return 'aqui la info';
 }
 
 void saveFile(int id, String urlImg) async {
