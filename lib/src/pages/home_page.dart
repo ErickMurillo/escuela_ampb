@@ -51,8 +51,6 @@ class _HomePageState extends State<HomePage> {
             future: getData(),
             builder: (BuildContext context, AsyncSnapshot snapshot) {
                 if (snapshot.hasData) {
-                  //print("Existe datos");
-                  //print(snapshot.data);
 
                     return Scaffold(
                         appBar: AppBar(
@@ -61,8 +59,10 @@ class _HomePageState extends State<HomePage> {
                         body: _listaDeCursos(snapshot.data, context),
                     );
                 } else {
-                    return Center(
-                        child: CircularProgressIndicator(),
+                    return Scaffold(
+                      body: Center(
+                          child: CircularProgressIndicator(),
+                      ),
                     );
                 }
             },
