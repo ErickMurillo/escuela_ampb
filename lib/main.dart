@@ -1,5 +1,6 @@
 //import 'dart:io';
 
+import 'package:escuela_ampb/src/pages/first_page.dart';
 import 'package:escuela_ampb/src/services/descarga_provider.dart';
 import 'package:flutter/material.dart';
 
@@ -30,9 +31,10 @@ class MyApp extends StatelessWidget {
               title: 'Material App',
               initialRoute: '/',
               routes: {
-                  '/' : (BuildContext context) => HomePage(),
+                  '/' : (BuildContext context) => FirstPage(),
                   'modulos' : (BuildContext context) => ModuloList(),
                   'contenido' : (BuildContext context) => ContenidoPage(),
+                  //'firstpage' : (BuildContext context) => FirstPage(),
               },
           ),
         );
