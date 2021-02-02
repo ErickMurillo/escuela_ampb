@@ -37,41 +37,25 @@ class _FirstPageState extends State<FirstPage> {
     });
   }
 
-
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
         body: Column(
           children: [
-            Row(
-              children: <Widget>[
 
-               Text('Bienvenido a'),
-               Text('Formación'),
-                
-              ]
+            Text('Bienvenido a'),
+            Text('Formación'),
+            Card(
+              child: Column(
+                children: <Widget>[
+                  Text("Frases valurdes"),
+                ],
+              ),
             ),
-            Row(
-              Card(
-                  child: Center(
-                  child: Column(
-                    children: <Widget>[
-                      Text("Frases valurdes"),
-                      IconButton(
-                        icon: Icon(Icons.access_alarms),
-                        tooltip: "Mensaje",
-                      ),
-                    ],
-                  ),
-                  ),
-                ),
-            )
 
           ],
         ),
-
-
 
         bottomNavigationBar: BottomNavigationBar(
           items: const <BottomNavigationBarItem>[
