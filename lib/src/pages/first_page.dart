@@ -43,17 +43,9 @@ class _FirstPageState extends State<FirstPage> {
       child: Scaffold(
         body: Column(
           children: [
-
-            Text('Bienvenido a'),
-            Text('Formación'),
-            Card(
-              child: Column(
-                children: <Widget>[
-                  Text("Frases valurdes"),
-                ],
-              ),
-            ),
-
+           
+           _header()
+       
           ],
         ),
 
@@ -99,4 +91,57 @@ class _FirstPageState extends State<FirstPage> {
       ),
     );
   }
+
+  Widget _header() {
+    return Stack(
+      children: [
+        Container(
+          width: double.infinity,
+          height: 240.0,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.only(
+                        bottomLeft:  const  Radius.circular(40.0),
+                        bottomRight: const  Radius.circular(40.0)),
+            color: Colors.deepPurple[900]
+          )
+        ),
+        Container(
+          padding: EdgeInsets.all(20.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text("Bienvenidos a", style: TextStyle(color: Colors.white, fontSize: 30, fontWeight: FontWeight.bold)),
+              SizedBox(height: 18.0),
+              Text("Formación", style: TextStyle(color: Colors.white, fontSize: 30, fontWeight: FontWeight.bold)),
+              SizedBox(height: 22.0),
+              TextField(
+                autofocus: false,
+                style: TextStyle(fontSize: 14.0, color: Colors.black87, fontWeight: FontWeight.bold),
+                decoration: InputDecoration(
+                  filled: true,
+                  fillColor: Colors.white,
+                  hintText: '¡Busque nuevos conocimientos!',
+                  contentPadding:
+                      const EdgeInsets.only(left: 14.0, bottom: 8.0, top: 8.0),
+                  focusedBorder: OutlineInputBorder(
+                    borderSide: BorderSide(color: Colors.white),
+                    borderRadius: BorderRadius.circular(22),
+                  ),
+                  enabledBorder: UnderlineInputBorder(
+                    borderSide: BorderSide(color: Colors.white),
+                    borderRadius: BorderRadius.circular(22),
+                  ),
+                ),
+              ),
+            ]
+          )
+        )
+        
+      ]
+    );
+  }
+
+
+
+
 }
