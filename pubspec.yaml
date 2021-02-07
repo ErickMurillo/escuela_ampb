@@ -37,6 +37,7 @@ dependencies:
   network_to_file_image: ^2.3.7
   image_downloader: ^0.20.1
   http:
+  carousel_slider: ^3.0.0
 
 dev_dependencies:
   flutter_test:
