@@ -1,5 +1,15 @@
 
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+
+final List<String> imgList = [
+  'https://images.unsplash.com/photo-1520342868574-5fa3804e551c?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=6ff92caffcdd63681a35134a6770ed3b&auto=format&fit=crop&w=1951&q=80',
+  'https://images.unsplash.com/photo-1522205408450-add114ad53fe?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=368f45b0888aeb0b7b08e3a1084d3ede&auto=format&fit=crop&w=1950&q=80',
+  'https://images.unsplash.com/photo-1519125323398-675f0ddb6308?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=94a1e718d89ca60a6337a6008341ca50&auto=format&fit=crop&w=1950&q=80',
+  'https://images.unsplash.com/photo-1523205771623-e0faa4d2813d?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=89719a0d55dd05e2deae4120227e6efc&auto=format&fit=crop&w=1953&q=80',
+  'https://images.unsplash.com/photo-1508704019882-f9cf40e475b4?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=8c6e5e3aba713b17aa1fe71ab4f0ae5b&auto=format&fit=crop&w=1352&q=80',
+  'https://images.unsplash.com/photo-1519985176271-adb1088fa94c?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=a0c8d632e977f94e5d312d9893258f59&auto=format&fit=crop&w=1355&q=80'
+];
 
 class FirstPage extends StatefulWidget {
 
@@ -10,6 +20,13 @@ class FirstPage extends StatefulWidget {
 
 class _FirstPageState extends State<FirstPage> {
   int _selectedIndex = 0;
+
+  static const TextStyle titleOptionStyle = 
+      TextStyle(color: Colors.black45,fontSize: 18, fontWeight: FontWeight.bold);
+    
+  static const TextStyle subtitleOptionStyle = 
+      TextStyle(color: Colors.black45,fontSize: 14, fontWeight: FontWeight.bold);
+
   static const TextStyle optionStyle =
       TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
   static const List<Widget> _widgetOptions = <Widget>[
@@ -41,12 +58,38 @@ class _FirstPageState extends State<FirstPage> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        body: Column(
-          children: [
-           
-           _header()
+        body: SingleChildScrollView(
+          child: Column(
+            children: [
+             
+              _header(),
+              SizedBox(height: 10.0),
+              _frasesCelebres(),
+              SizedBox(height: 10.0),
+              Container(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    Text("Cursos destacados",style: titleOptionStyle),
+                    Text("ver todos",style: subtitleOptionStyle),
+                  ],
+                )),
+              _cursosDestacados(),
+              SizedBox(height: 10.0),
+              Container(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    Text("Cursos",style: titleOptionStyle),
+                    Text("ver todos",style: subtitleOptionStyle),
+                  ],
+                )),
+                _CursosTotales()
+             
+             
        
-          ],
+            ],
+          ),
         ),
 
         bottomNavigationBar: BottomNavigationBar(
@@ -141,7 +184,114 @@ class _FirstPageState extends State<FirstPage> {
     );
   }
 
+  Widget _frasesCelebres() {
+    return CarouselSlider(
+      options: CarouselOptions(height: 180.0, autoPlay: false,),
+      items: [1,2,3,4,5].map((i) {
+        return Builder(
+          builder: (BuildContext context) {
+            return Container(
+              width: MediaQuery.of(context).size.width,
+              margin: EdgeInsets.symmetric(horizontal: 5.0),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(15),
+                color: Colors.amber
+              ),
+              child: Container(
+                margin: EdgeInsets.all(10.0),
+                child: Center(child: Text('Los indigenes estamos dispuestos a combinar tradición con modernidad, pero no a caualquier precio $i', 
+                              style: TextStyle(
+                                fontSize: 16.0, 
+                                color: Colors.white, 
+                                fontWeight: FontWeight.bold),)),
+              )
+            );
+          },
+        );
+      }).toList(),
+    );
+  }
 
+  Widget _cursosDestacados() {
+    return CarouselSlider(
+      options: CarouselOptions(height: 200.0),
+      items: [1,2,3,4,5].map((i) {
+        return Builder(
+          builder: (BuildContext context) {
+            return Container(
+              width: MediaQuery.of(context).size.width,
+              margin: EdgeInsets.symmetric(horizontal: 5.0),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10.0),
+                color: Colors.white54
+              ),
+              child: Column(
+                children: [
+                  Image.asset('assets/prueba.jpg',
+                  height: 150,
+                  //width: 100,
+                  scale: 0.8,
+                  fit: BoxFit.cover),
+                  Text("Del 'Yo al nos': Identidad en comunidad")
+                ],
+              )
+            );
+          },
+        );
+      }).toList(),
+    );
+  }
+
+  Widget _CursosTotales() {
+    return  CarouselSlider(
+            options: CarouselOptions(
+              autoPlay: true,
+              aspectRatio: 2.0,
+              enlargeCenterPage: true,
+            ),
+            items: imageSliders,
+          );
+  }
+
+  final List<Widget> imageSliders = imgList.map((item) => Container(
+  child: Container(
+    margin: EdgeInsets.all(5.0),
+    child: ClipRRect(
+      borderRadius: BorderRadius.all(Radius.circular(5.0)),
+      child: Stack(
+        children: <Widget>[
+          Image.network(item, fit: BoxFit.cover, width: 1000.0),
+          Positioned(
+            bottom: 0.0,
+            left: 0.0,
+            right: 0.0,
+            child: Container(
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  colors: [
+                    Color.fromARGB(200, 0, 0, 0),
+                    Color.fromARGB(0, 0, 0, 0)
+                  ],
+                  begin: Alignment.bottomCenter,
+                  end: Alignment.topCenter,
+                ),
+              ),
+              padding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0),
+              child: Text(
+                'Curso. ${imgList.indexOf(item)}',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 20.0,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ),
+          ),
+        ],
+      )
+    ),
+  ),
+)).toList();
 
 
 }
