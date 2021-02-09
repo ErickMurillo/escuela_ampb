@@ -33,7 +33,7 @@ class MyApp extends StatelessWidget {
               title: 'Material App',
               initialRoute: '/',
               routes: {
-                  '/' : ( _ ) => FirstPage(),
+                  '/' : ( _ ) => HomePage(), //FirstPage
                   'modulos' : ( _ ) => ModuloList(),
                   'contenido' : ( _ ) => ContenidoPage(),
                   'lista_cursos' : ( _ ) => ListaCursoPage(),

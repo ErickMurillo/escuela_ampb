@@ -37,18 +37,18 @@ class CursoProvider{
             responseType: ResponseType.plain
 
         )).get(url);
-        final data = response;
-        final decode = json.decode(data.data);
+        //final data = response;
+        final decode = json.decode(response.data);
 
-        print("printing the decode");
-        for (var item in decode) {
+        // print("printing the decode");
+        // for (var item in decode) {
          
-          print(baseUrl+item['imagen']);
-          var rutaImg = baseUrl+item['imagen'];
-          var newImg = _saveImage(rutaImg, item['id']);
-          print(newImg);
+        //   print(baseUrl+item['imagen']);
+        //   var rutaImg = baseUrl+item['imagen'];
+        //   var newImg = _saveImage(rutaImg, item['id']);
+        //   print(newImg);
           
-        }
+        // }
 
         return (decode as List).map((curso) {
 
@@ -58,17 +58,17 @@ class CursoProvider{
     }
 }
 
-Future _saveImage(String imgUrl, int id) async {
-    var response = await get(imgUrl);
-    var documentDirectory = await getApplicationDocumentsDirectory();
-    File file = File(join(documentDirectory.path, 'cursos_$id.jpg'));
-    file.writeAsBytesSync(response.bodyBytes);
-    //print(response);
-    //print(response.bodyBytes);
-    print(documentDirectory);
-    print(file);
-    return file;
-  }
+// Future _saveImage(String imgUrl, int id) async {
+//     var response = await get(imgUrl);
+//     var documentDirectory = await getApplicationDocumentsDirectory();
+//     File file = File(join(documentDirectory.path, 'cursos_$id.jpg'));
+//     file.writeAsBytesSync(response.bodyBytes);
+//     //print(response);
+//     //print(response.bodyBytes);
+//     print(documentDirectory);
+//     print(file);
+//     return file;
+//   }
 
 
 

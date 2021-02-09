@@ -89,21 +89,17 @@ class _HomePageState extends State<HomePage> {
 
     Widget  _cardCurso(Curso curso){
 
-        //String urlImg = baseUrl + curso.imagen;
-        File urlImg = File('/data/user/0/ni.org.simas.escuela_ampb/app_flutter/cursos_${curso.id}.jpg');
         return GestureDetector(
             child: Card(
                 child: Column(
                     children: <Widget>[
                       Container(
-                        child: (urlImg == null) ? 'assets/prueba.jpg' : Image.file(urlImg)),
-                      
-                      
-                        // CachedNetworkImage(
-                        //     imageUrl: urlImg,
-                        //     placeholder: (context, url) => CircularProgressIndicator(),
-                        //     errorWidget: (context, url, error) => Icon(Icons.error),
-                        // ),
+                        child: CachedNetworkImage(
+                            imageUrl: curso.imagen,
+                            placeholder: (context, url) => CircularProgressIndicator(),
+                            errorWidget: (context, url, error) => Icon(Icons.error),
+                        ),
+                      ),
                         Text(curso.titulo),
                     ],
                 ),
