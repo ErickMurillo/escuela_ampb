@@ -1,6 +1,7 @@
-
-import 'package:carousel_slider/carousel_slider.dart';
+import 'package:escuela_ampb/src/widgets/light_color.dart';
 import 'package:flutter/material.dart';
+import 'package:carousel_slider/carousel_slider.dart';
+
 
 final List<String> imgList = [
   'https://images.unsplash.com/photo-1520342868574-5fa3804e551c?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=6ff92caffcdd63681a35134a6770ed3b&auto=format&fit=crop&w=1951&q=80',
@@ -136,6 +137,8 @@ class _FirstPageState extends State<FirstPage> {
   }
 
   Widget _header() {
+    
+    var width = MediaQuery.of(context).size.width;
     return Stack(
       children: [
         Container(
@@ -148,6 +151,19 @@ class _FirstPageState extends State<FirstPage> {
             color: Colors.deepPurple[900]
           )
         ),
+        Positioned(
+            top: 20,
+            right: -50,
+            child: _circularContainer(200, LightColor.lightpurple)),
+        Positioned(
+            top: -100,
+            left: -45,
+            child: _circularContainer(width * .5, LightColor.darkpurple)),
+        Positioned(
+            top: -180,
+            right: -30,
+            child: _circularContainer(width * .7, Colors.transparent,
+                borderColor: Colors.white38)),
         Container(
           padding: EdgeInsets.all(20.0),
           child: Column(
@@ -181,6 +197,19 @@ class _FirstPageState extends State<FirstPage> {
         )
         
       ]
+    );
+  }
+
+  Widget _circularContainer(double height, Color color,
+      {Color borderColor = Colors.transparent, double borderWidth = 2}) {
+    return Container(
+      height: height,
+      width: height,
+      decoration: BoxDecoration(
+        shape: BoxShape.circle,
+        color: color,
+        border: Border.all(color: borderColor, width: borderWidth),
+      ),
     );
   }
 
