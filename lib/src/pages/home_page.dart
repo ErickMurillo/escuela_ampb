@@ -1,6 +1,6 @@
 //import 'dart:io';
 
-import 'dart:io';
+// import 'dart:io';
 
 import 'package:flutter/material.dart';
 
@@ -26,7 +26,6 @@ class _HomePageState extends State<HomePage> {
     CursoProvider cursoProvider = CursoProvider();
     ModuloProvider moduloProvider =  ModuloProvider();
     ContenidoProvider contenidoProvider =  ContenidoProvider();
-    //String baseUrl = 'http://ampb.caps-nicaragua.org';
     dynamic resCurso;
     dynamic resModulo;
     //dynamic resContenido;

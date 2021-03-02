@@ -1,8 +1,9 @@
-import 'package:cached_network_image/cached_network_image.dart';
-import 'package:escuela_ampb/src/models/curso_model.dart';
-import 'package:escuela_ampb/src/providers/DBProvider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
+import 'package:cached_network_image/cached_network_image.dart';
+
+import 'package:escuela_ampb/src/models/curso_model.dart';
+import 'package:escuela_ampb/src/providers/DBProvider.dart';
 
 class ListaCursoPage extends StatelessWidget {
   Future<List<Curso>> cursos = DBProvider.db.getTodosCursos();
@@ -22,6 +23,7 @@ class ListaCursoPage extends StatelessWidget {
                 itemCount: curso.length,
                 itemBuilder: (context, index) {
                   return ListTile(
+                    onTap: () => Navigator.pushNamed(context, 'modulos', arguments: [curso[index].id, curso[index].titulo]),
                     leading: CircleAvatar(
                       child: CachedNetworkImage(
                         imageUrl: curso[index].imagen,

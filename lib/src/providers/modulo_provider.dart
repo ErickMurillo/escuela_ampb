@@ -10,7 +10,7 @@ import 'package:escuela_ampb/src/models/modulo_model.dart';
 
 class ModuloProvider{
 
-    String baseUrl = 'http://ampb.caps-nicaragua.org';
+    String baseUrl = 'http://www.escuelamesoamericana.org';
 
     Future<List<Modulo>> getModulos() async {
         var url = baseUrl + "/aprende/api/modulos/";

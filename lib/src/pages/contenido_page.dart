@@ -65,7 +65,7 @@ class _ContenidoPageState extends State<ContenidoPage> {
 
     String _getimg( String contenido) {
         var img = parse(contenido.replaceAll(
-        'http://ampb.caps-nicaragua.org/media/', 'http://ampb.caps-nicaragua.org/media/'));
+        'http://www.escuelamesoamericana.org/media/', 'http://www.escuelamesoamericana.org/media/'));
         return img.outerHtml;
     }
 }

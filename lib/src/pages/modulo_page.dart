@@ -1,15 +1,15 @@
 
 import 'dart:io';
 
-import 'package:escuela_ampb/src/providers/contenido_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:flutter_html/html_parser.dart';
 
 import 'package:html/parser.dart';
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:path/path.dart' as p;
+import 'package:cached_network_image/cached_network_image.dart';
 
+import 'package:escuela_ampb/src/providers/contenido_provider.dart';
 import 'package:escuela_ampb/src/models/contenido_model.dart';
 import 'package:escuela_ampb/src/models/curso_model.dart';
 import 'package:escuela_ampb/src/models/modulo_model.dart';
@@ -164,7 +164,7 @@ class _ModuloListState extends State<ModuloList> {
 
     String _getimg( String contenido) {
         var img = parse(contenido.replaceAll(
-        '/media/', 'http://ampb.caps-nicaragua.org/media/'));
+        'http://www.escuelamesoamericana.org/media/', 'http://www.escuelamesoamericana.org/media/'));
         return img.outerHtml;
     }
 

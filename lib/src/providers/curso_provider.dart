@@ -2,7 +2,7 @@
 //import 'dart:convert';
 
 import 'dart:convert';
-import 'dart:io';
+// import 'dart:io';
 import 'package:dio/dio.dart';
 // import 'package:html/dom.dart';
 // import 'package:html/dom_parsing.dart';
@@ -12,17 +12,17 @@ import 'package:dio/dio.dart';
 //importaciones Propias
 import 'package:escuela_ampb/src/models/curso_model.dart';
 import 'package:escuela_ampb/src/providers/DBProvider.dart';
-import 'package:flutter/services.dart';
-import 'package:image_downloader/image_downloader.dart';
-import 'package:path_provider/path_provider.dart';
-import 'package:path/path.dart';
-import 'package:http/http.dart' show get;
+// import 'package:flutter/services.dart';
+// import 'package:image_downloader/image_downloader.dart';
+// import 'package:path_provider/path_provider.dart';
+// import 'package:path/path.dart';
+// import 'package:http/http.dart' show get;
 
 
 
 class CursoProvider{
 
-    String baseUrl = 'http://ampb.caps-nicaragua.org';
+    String baseUrl = 'http://www.escuelamesoamericana.org';
 
     List hyperlinks = [];
 

@@ -1,3 +1,5 @@
+// import 'package:escuela_ampb/src/models/curso_model.dart';
+import 'package:escuela_ampb/src/providers/curso_provider.dart';
 import 'package:escuela_ampb/src/widgets/light_color.dart';
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
@@ -21,6 +23,7 @@ class FirstPage extends StatefulWidget {
 
 class _FirstPageState extends State<FirstPage> {
   int _selectedIndex = 0;
+  var apiProvider = CursoProvider();
 
   static const TextStyle titleOptionStyle = 
       TextStyle(color: Colors.black45,fontSize: 18, fontWeight: FontWeight.bold);
@@ -54,6 +57,13 @@ class _FirstPageState extends State<FirstPage> {
       _selectedIndex = index;
     });
   }
+
+  @override
+  void initState() {
+    apiProvider.getCursos();
+    super.initState();
+    
+  } 
 
   @override
   Widget build(BuildContext context) {
@@ -121,7 +131,7 @@ class _FirstPageState extends State<FirstPage> {
                 Navigator.pushNamed(context, "/");
                 break;
               case 1:
-                Navigator.pushNamed(context, "search");
+                Navigator.pushNamed(context, "buscador");
                 break;
               case 2:
                 Navigator.pushNamed(context, "lista_cursos");

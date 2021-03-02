@@ -8,7 +8,7 @@ import 'package:escuela_ampb/src/providers/DBProvider.dart';
 
 class ContenidoProvider{
 
-    String baseUrl = 'http://ampb.caps-nicaragua.org';
+    String baseUrl = 'http://www.escuelamesoamericana.org';
 
     Future<List<Contenido>> getContenidos(int id) async {
         var url = baseUrl + "/aprende/api/contenidos/filtro/${id}";
@@ -21,14 +21,11 @@ class ContenidoProvider{
         final data = response;
         final decode = json.decode(data.data);
 
-
-
         return (decode as List).map((contenido) {
-            //print('Inserting $contenido');
+           
             DBProvider.db.insertContenido(Contenido.fromJson(contenido));
         }).toList();
-        // final contenido = new Contenidos.fromJsonList(decode);
-        // return contenido.items;
+       
     }
 }
 
