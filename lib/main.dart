@@ -2,6 +2,7 @@
 
 import 'package:escuela_ampb/src/pages/first_page.dart';
 import 'package:escuela_ampb/src/pages/lista_curso_page.dart';
+import 'package:escuela_ampb/src/pages/modulo_page2.dart';
 import 'package:escuela_ampb/src/pages/notas_page.dart';
 import 'package:escuela_ampb/src/services/descarga_provider.dart';
 import 'package:flutter/material.dart';
@@ -33,7 +34,7 @@ class MyApp extends StatelessWidget {
               title: 'Material App',
               initialRoute: '/',
               routes: {
-                  '/' : ( _ ) => FirstPage(), //FirstPage,HomePage
+                  '/' : ( _ ) => ModulePage2(), //FirstPage,HomePage
                   'modulos' : ( _ ) => ModuloList(),
                   'contenido' : ( _ ) => ContenidoPage(),
                   'lista_cursos' : ( _ ) => ListaCursoPage(),
