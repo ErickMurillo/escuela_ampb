@@ -37,7 +37,7 @@ class MyApp extends StatelessWidget {
               ),
               initialRoute: '/',
               routes: {
-                  '/' : ( _ ) => HomePage(), //FirstPage,HomePage
+                  '/' : ( _ ) => FirstPage(), //FirstPage,HomePage
                   'modulos' : ( _ ) => ModuloList(),
                   'contenido' : ( _ ) => ContenidoPage(),
                   'lista_cursos' : ( _ ) => ListaCursoPage(),

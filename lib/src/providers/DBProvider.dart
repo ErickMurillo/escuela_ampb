@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:escuela_ampb/src/models/contenido_model.dart';
 import 'package:escuela_ampb/src/models/curso_model.dart';
 import 'package:escuela_ampb/src/models/modulo_model.dart';
+import 'package:escuela_ampb/src/models/reflexion_model.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:path_provider/path_provider.dart';
@@ -60,6 +61,17 @@ class DBProvider{
                     'orden INTEGER,'
                     'url_video TEXT,'
                     'nombre_video TEXT'
+                    ')'
+                );
+
+                await db.execute(
+                    'CREATE TABLE Reflexion('
+                    'id INTEGER PRIMARY KEY,'
+                    'texto TEXT,'
+                    'link TEXT,'
+                    'autor TEXT,'
+                    'fecha TEXT,'
+                    'activo TEXT'
                     ')'
                 );
             }
@@ -132,6 +144,21 @@ class DBProvider{
         }
     }
 
+    insertReflexion(Reflexion nuevaReflexion) async{
+        final db = await database;
+        final pregunta = await db.query('Reflexion', where: 'id = ?', whereArgs: [nuevaReflexion.id]);
+        if (pregunta.isNotEmpty) {
+            final flag = await db.query('Reflexion', where: 'fecha = ? AND id = ?', whereArgs: [nuevaReflexion.fecha, nuevaReflexion.id]);
+            if(!flag.isNotEmpty){
+                final res = await db.update('Reflexion', nuevaReflexion.toJson(), where: 'id = ?', whereArgs: [nuevaReflexion.id]);
+                return res;
+            }
+        } else {
+            final res = await db.insert('Reflexion', nuevaReflexion.toJson());
+            return res;
+        }
+    }
+
     //SELECT - obtener informacion
 
     //obtenes registro por id
@@ -150,6 +177,12 @@ class DBProvider{
         final db = await database;
         final res = await db.query('Contenido', where: 'id = ?', whereArgs: [id]);
         return res.isNotEmpty ? Contenido.fromJson(res.first) : null;
+    }
+
+     Future<Reflexion> getReflexionId(int id) async{
+        final db = await database;
+        final res = await db.query('Reflexion', where: 'id = ?', whereArgs: [id]);
+        return res.isNotEmpty ? Reflexion.fromJson(res.first) : null;
     }
 
     //Todos los resgistros
@@ -183,6 +216,15 @@ class DBProvider{
                                     ? res.map((e) => Contenido.fromJson(e)).toList()
                                     : [];
 
+        return list;
+    }
+
+    Future<List<Reflexion>> getTodosReflexiones() async{
+        final db = await database;
+        final res = await db.query('Reflexion');
+        List <Reflexion> list = res.isNotEmpty
+                            ? res.map((e) => Reflexion.fromJson(e)).toList()
+                            : [];
         return list;
     }
 

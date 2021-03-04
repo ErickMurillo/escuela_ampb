@@ -1,3 +1,4 @@
+import 'package:escuela_ampb/src/providers/modulo_provider.dart';
 import 'package:flutter/material.dart';
 // import 'package:escuela_ampb/src/models/curso_model.dart';
 import 'package:escuela_ampb/src/providers/curso_provider.dart';
@@ -23,7 +24,8 @@ class FirstPage extends StatefulWidget {
 
 class _FirstPageState extends State<FirstPage> {
   int _selectedIndex = 0;
-  var apiProvider = CursoProvider();
+  var apiCursoProvider = CursoProvider();
+  var apiModuloProvider = ModuloProvider();
 
   static const TextStyle titleOptionStyle =
       TextStyle(color: Colors.black45,fontSize: 18, fontWeight: FontWeight.bold);
@@ -60,7 +62,8 @@ class _FirstPageState extends State<FirstPage> {
 
   @override
   void initState() {
-    apiProvider.getCursos();
+    apiCursoProvider.getCursos();
+    apiModuloProvider.getModulos();
     super.initState();
 
   }
@@ -158,7 +161,7 @@ class _FirstPageState extends State<FirstPage> {
             borderRadius: BorderRadius.only(
                         bottomLeft:  const  Radius.circular(40.0),
                         bottomRight: const  Radius.circular(40.0)),
-            color: Colors.deepPurple[900]
+            color: Color(0xFF4f002b)
           )
         ),
         Positioned(
@@ -234,7 +237,7 @@ class _FirstPageState extends State<FirstPage> {
               margin: EdgeInsets.symmetric(horizontal: 5.0),
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(15),
-                color: Colors.amber
+                color: Color(0xff8cc63f)
               ),
               child: Container(
                 margin: EdgeInsets.all(10.0),

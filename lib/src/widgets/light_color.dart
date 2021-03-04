@@ -19,8 +19,8 @@ class LightColor {
   static const Color lightOrange2 = Color(0xfff97d6d);
 
   static const Color purple = Color(0xff7a81dd);
-  static const Color lightpurple = Color(0xff898edf);
-  static const Color darkpurple = Color(0xff7178d3);
+  static const Color lightpurple = Color(0xffB43A69);
+  static const Color darkpurple = Color(0xff69203C);
   static const Color extraDarkPurple = Color(0xff494c79);
 
   static const Color seeBlue = Color(0xff73d4dd);

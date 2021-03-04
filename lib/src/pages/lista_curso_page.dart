@@ -1,3 +1,4 @@
+import 'package:escuela_ampb/src/widgets/menu_custom.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:cached_network_image/cached_network_image.dart';
@@ -11,9 +12,7 @@ class ListaCursoPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        appBar: AppBar(
-          title: Text("Lista de Cursos"),
-        ),
+        appBar: MyCustomAppBar(height: 120, texto: "Lista de cursos",),
         body: FutureBuilder<List<Curso>>(
           future: DBProvider.db.getTodosCursos(),
           builder: (BuildContext context, AsyncSnapshot<List<Curso>> snapshot) {
