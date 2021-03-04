@@ -32,9 +32,12 @@ class MyApp extends StatelessWidget {
           child: MaterialApp(
               debugShowCheckedModeBanner: false,
               title: 'Material App',
+              theme: ThemeData(
+                primaryColor: Color(0xFF4f002b),
+              ),
               initialRoute: '/',
               routes: {
-                  '/' : ( _ ) => ModulePage2(), //FirstPage,HomePage
+                  '/' : ( _ ) => HomePage(), //FirstPage,HomePage
                   'modulos' : ( _ ) => ModuloList(),
                   'contenido' : ( _ ) => ContenidoPage(),
                   'lista_cursos' : ( _ ) => ListaCursoPage(),

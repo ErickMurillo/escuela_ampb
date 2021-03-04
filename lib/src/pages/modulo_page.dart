@@ -79,7 +79,7 @@ class _ModuloListState extends State<ModuloList> {
 
                         body: SingleChildScrollView(
                             child: Container(
-                            padding: EdgeInsets.symmetric(horizontal: 20.0),
+                            //padding: EdgeInsets.symmetric(horizontal: 20.0),
                                 child: Column(
                                     children: <Widget>[
                                       introducionCurso(cursoid),
@@ -109,48 +109,59 @@ class _ModuloListState extends State<ModuloList> {
     }
 
     Widget introducionCurso(int curso){
-
+        var width = MediaQuery.of(context).size.width;
         final filterCurso = DBProvider.db.getCursoId(curso);
-        //print("curso desde la pagina");
-        //print(filterCurso);
         return SingleChildScrollView(
-
             child: FutureBuilder(
               future: filterCurso,
               builder: (BuildContext context, AsyncSnapshot<Curso> snapshot) {
                 if ( snapshot.hasData ) {
                   final Curso curso = snapshot.data;
-                  //print("Detalle del curso");
-                  //print(curso.titulo);
                   return Column(
                     children: [
-                      Container(
-                          padding: EdgeInsets.symmetric(vertical: 20.0),
-                          child: Text(
-                              curso.titulo ,
-                              style: TextStyle(
-                              color: Colors.black,
-                              fontWeight: FontWeight.bold,
-                              fontSize: 30)
+                      Stack(
+                        children: [
+                          CachedNetworkImage(imageUrl: curso.imagen),
+                          Container(
+                              margin: EdgeInsets.all(50.0),
+                              child: Text(
+                                  curso.titulo ,
+                                  style: TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 30)
+                              ),
                           ),
+                          Positioned(
+                            top: 240,
+                            child: Container(
+                            width: width * 1,
+                            height: 380,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.only(
+                                          topLeft:  const  Radius.circular(40.0),
+                                          topRight: const  Radius.circular(40.0)),
+                              color: Colors.white
+                          )
+                        ),
                       ),
-                      Html(
-                          data: _getimg(curso.descripcion),
-                          customRender: {
-                              "img": (RenderContext context, Widget child, attributes, _)  {
-
-                                  //File filetoimg = File(_.attributes['src']);
-                                  String _imgBody = _.attributes['src'];
-
-                                  return CachedNetworkImage(
-                                      imageUrl: _imgBody,
-                                      placeholder: (context, url) => Center(child: CircularProgressIndicator(),),
-                                      errorWidget: (context, url, error) => Icon(Icons.error),
-                                  );
-
-                              },
-                          },
+                        ],
                       ),
+
+                      Card(
+                        child: ExpansionTile(
+                          title: Text("Introducción"),
+                          initiallyExpanded: true,
+                          children: [
+                            Container(
+                              child: Html(
+                                data: _getimg(curso.descripcion),
+                        ),
+                            )
+                          ],
+                          ),
+                      )
+
                   ],
               );
                 } else {
@@ -172,55 +183,46 @@ class _ModuloListState extends State<ModuloList> {
     Widget _cardmodulo(List modulo, List contenido, BuildContext context) {
         return ListView.builder(
             itemBuilder: (context, index) {
-                final cardCurso = Card(
-                    child: Column(
+                final cardCurso = Card(child: ExpansionTile(
+                  title: Text('${modulo[index].titulo}'),
+                    children: [Column(
                         children: <Widget>[
-                        Text('${modulo[index].titulo} -- ${modulo[index].id}'),
-                        SizedBox(
-                            height: 20.0,
-                        ),
                         _prueba(modulo[index].id, contenido, context)
 
                         ],
-                    ),
-                );
-                //print(modulo[index].id);
+                    ),]
+                ));
                 return GestureDetector(
                 child: cardCurso,
                 onTap: () {
-                  print("click modulo");
+
                 },
                 );
             },
             shrinkWrap: true,
             itemCount: modulo.length,
-            padding: EdgeInsets.only(bottom: 20.0),
+            padding: EdgeInsets.only(bottom: 5.0),
             controller: ScrollController(keepScrollOffset: false),
         );
     }
 
     Widget _prueba(int idModulo, contenido, BuildContext context) {
         List<Widget> lisItem = List<Widget>();
-        //print(idModulo);
         for (var item in contenido) {
-
             if (item.modulo == idModulo) {
-                //print(item.titulo);
                 lisItem.add(
                     GestureDetector(
-                        child:  ListTile(
+                        child:  Card(
+                            child: ListTile(
                             title: Text(item.titulo),
+                          ),
                         ),
                         onTap: () => Navigator.pushNamed(context, 'contenido', arguments: item),
                     )
                 );
 
             }
-
-
-
         }
-
         return Column(children:lisItem,);
     }
 

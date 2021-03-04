@@ -31,36 +31,62 @@ class _ModulePage2State extends State<ModulePage2> {
       body: Stack(
         children: [
           Image.asset("assets/curso.jpg"),
+          Padding(
+            padding: EdgeInsets.only(top: 100),
+              child: Text("Titulo del curso", style: TextStyle(
+              color: Colors.white,
+              fontWeight: FontWeight.bold,
+              fontSize: 24.0)),
+          ),
           Column(
             children: [
-               SizedBox(
-            height: size.height * 0.2),
-          Expanded(
-            child: Container(
-             
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.only(
-                          topLeft:  const  Radius.circular(40.0),
-                          topRight: const  Radius.circular(40.0)),
-              color: Colors.white
-            ),
-              child: ListView.builder(
-                itemCount: 6,
-                itemBuilder: (context,index){
-                  return ListTile(
-                    title: Text("texto $index"),
-                  );
-                },
+                SizedBox(
+                  height: size.height * 0.3
+                ),
+              Card(
+                child: ExpansionTile(
+                  initiallyExpanded: true,
+                  title: Text("modulo 1"),
+                  children: [
+                    ListView.builder(
+                      shrinkWrap: true,
+                      itemCount: 6,
+                      itemBuilder: (context,index){
+                        return Card(
+                          child: ListTile(
+                            title: Text("texto $index"),
+                          ),
+                        );
+                    },
+                  ),
+                  ]
+                )
+              ),
+              Card(
+                child: ExpansionTile(
+                  title: Text("modulo 2"),
+                  children: [
+                    ListView.builder(
+                      shrinkWrap: true,
+                      itemCount: 6,
+                      itemBuilder: (context,index){
+                        return Card(
+                          child: ListTile(
+                            title: Text("texto $index"),
+                          ),
+                        );
+                    },
+                  ),
+                  ]
+                )
               )
 
-            ),
-          )
             ],
           ),
-         
+
         ],
       ),
-      
+
     );
   }
 }

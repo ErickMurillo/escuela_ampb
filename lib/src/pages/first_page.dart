@@ -1,7 +1,7 @@
+import 'package:flutter/material.dart';
 // import 'package:escuela_ampb/src/models/curso_model.dart';
 import 'package:escuela_ampb/src/providers/curso_provider.dart';
 import 'package:escuela_ampb/src/widgets/light_color.dart';
-import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 
 
@@ -25,10 +25,10 @@ class _FirstPageState extends State<FirstPage> {
   int _selectedIndex = 0;
   var apiProvider = CursoProvider();
 
-  static const TextStyle titleOptionStyle = 
+  static const TextStyle titleOptionStyle =
       TextStyle(color: Colors.black45,fontSize: 18, fontWeight: FontWeight.bold);
-    
-  static const TextStyle subtitleOptionStyle = 
+
+  static const TextStyle subtitleOptionStyle =
       TextStyle(color: Colors.black45,fontSize: 14, fontWeight: FontWeight.bold);
 
   static const TextStyle optionStyle =
@@ -62,8 +62,8 @@ class _FirstPageState extends State<FirstPage> {
   void initState() {
     apiProvider.getCursos();
     super.initState();
-    
-  } 
+
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -72,7 +72,7 @@ class _FirstPageState extends State<FirstPage> {
         body: SingleChildScrollView(
           child: Column(
             children: [
-             
+
               _header(),
               SizedBox(height: 10.0),
               _frasesCelebres(),
@@ -96,9 +96,9 @@ class _FirstPageState extends State<FirstPage> {
                   ],
                 )),
                 _CursosTotales()
-             
-             
-       
+
+
+
             ],
           ),
         ),
@@ -147,7 +147,7 @@ class _FirstPageState extends State<FirstPage> {
   }
 
   Widget _header() {
-    
+
     var width = MediaQuery.of(context).size.width;
     return Stack(
       children: [
@@ -205,7 +205,7 @@ class _FirstPageState extends State<FirstPage> {
             ]
           )
         )
-        
+
       ]
     );
   }
@@ -238,10 +238,10 @@ class _FirstPageState extends State<FirstPage> {
               ),
               child: Container(
                 margin: EdgeInsets.all(10.0),
-                child: Center(child: Text('Los indigenes estamos dispuestos a combinar tradición con modernidad, pero no a caualquier precio $i', 
+                child: Center(child: Text('Los indigenes estamos dispuestos a combinar tradición con modernidad, pero no a caualquier precio $i',
                               style: TextStyle(
-                                fontSize: 16.0, 
-                                color: Colors.white, 
+                                fontSize: 16.0,
+                                color: Colors.white,
                                 fontWeight: FontWeight.bold),)),
               )
             );
