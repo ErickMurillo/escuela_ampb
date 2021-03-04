@@ -125,11 +125,13 @@ class _ModuloListState extends State<ModuloList> {
                           Container(
                               margin: EdgeInsets.all(50.0),
                               child: Text(
-                                  curso.titulo ,
+                                  curso.titulo,
+                                   maxLines: 3,
+                                  overflow: TextOverflow.ellipsis,
                                   style: TextStyle(
                                   color: Colors.white,
                                   fontWeight: FontWeight.bold,
-                                  fontSize: 30)
+                                  fontSize: 24)
                               ),
                           ),
                           Positioned(
