@@ -1,4 +1,9 @@
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:escuela_ampb/src/models/curso_model.dart';
+import 'package:escuela_ampb/src/models/reflexion_model.dart';
+import 'package:escuela_ampb/src/providers/DBProvider.dart';
 import 'package:escuela_ampb/src/providers/modulo_provider.dart';
+import 'package:escuela_ampb/src/providers/reflexion_provider.dart';
 import 'package:flutter/material.dart';
 // import 'package:escuela_ampb/src/models/curso_model.dart';
 import 'package:escuela_ampb/src/providers/curso_provider.dart';
@@ -26,6 +31,7 @@ class _FirstPageState extends State<FirstPage> {
   int _selectedIndex = 0;
   var apiCursoProvider = CursoProvider();
   var apiModuloProvider = ModuloProvider();
+  var apiReflexionProvider = ReflexionProvider();
 
   static const TextStyle titleOptionStyle =
       TextStyle(color: Colors.black45,fontSize: 18, fontWeight: FontWeight.bold);
@@ -64,6 +70,7 @@ class _FirstPageState extends State<FirstPage> {
   void initState() {
     apiCursoProvider.getCursos();
     apiModuloProvider.getModulos();
+    apiReflexionProvider.getReflexiones();
     super.initState();
 
   }
@@ -75,7 +82,6 @@ class _FirstPageState extends State<FirstPage> {
         body: SingleChildScrollView(
           child: Column(
             children: [
-
               _header(),
               SizedBox(height: 10.0),
               _frasesCelebres(),
@@ -98,7 +104,7 @@ class _FirstPageState extends State<FirstPage> {
                     Text("ver todos",style: subtitleOptionStyle),
                   ],
                 )),
-                _CursosTotales()
+                _cursosTotales()
 
 
 
@@ -227,72 +233,176 @@ class _FirstPageState extends State<FirstPage> {
   }
 
   Widget _frasesCelebres() {
-    return CarouselSlider(
-      options: CarouselOptions(height: 180.0, autoPlay: false,),
-      items: [1,2,3,4,5].map((i) {
-        return Builder(
-          builder: (BuildContext context) {
-            return Container(
-              width: MediaQuery.of(context).size.width,
-              margin: EdgeInsets.symmetric(horizontal: 5.0),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(15),
-                color: Color(0xff8cc63f)
-              ),
-              child: Container(
-                margin: EdgeInsets.all(10.0),
-                child: Center(child: Text('Los indigenes estamos dispuestos a combinar tradición con modernidad, pero no a caualquier precio $i',
-                              style: TextStyle(
-                                fontSize: 16.0,
-                                color: Colors.white,
-                                fontWeight: FontWeight.bold),)),
-              )
-            );
-          },
-        );
-      }).toList(),
+    final dbFrases = DBProvider.db.getTodosReflexiones();
+    return FutureBuilder(
+      future: dbFrases,
+      //initialData: InitialData,
+      builder: (BuildContext context, AsyncSnapshot<List<Reflexion>> snapshot) {
+        if (snapshot.data != null) {
+          final data = snapshot.data;
+          return CarouselSlider(
+            options: CarouselOptions(height: 180.0, autoPlay: false,),
+            items: data.map((index) {
+              return Builder(
+                builder: (BuildContext context) {
+                  return Container(
+                    width: MediaQuery.of(context).size.width,
+                    margin: EdgeInsets.symmetric(horizontal: 5.0),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(15),
+                      color: Color(0xff8cc63f)
+                    ),
+                    child: Container(
+                      margin: EdgeInsets.all(10.0),
+                      child: Center(child: Text(index.texto,
+                                    style: TextStyle(
+                                      fontSize: 16.0,
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.bold),)),
+                    )
+                  );
+                },
+              );
+            }).toList(),
+          );
+         
+        } else {
+          return CircularProgressIndicator();
+        }  
+      },
     );
   }
 
   Widget _cursosDestacados() {
-    return CarouselSlider(
-      options: CarouselOptions(height: 200.0),
-      items: [1,2,3,4,5].map((i) {
-        return Builder(
-          builder: (BuildContext context) {
-            return Container(
-              width: MediaQuery.of(context).size.width,
-              margin: EdgeInsets.symmetric(horizontal: 5.0),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(10.0),
-                color: Colors.white54
-              ),
-              child: Column(
-                children: [
-                  Image.asset('assets/prueba.jpg',
-                  height: 150,
-                  //width: 100,
-                  scale: 0.8,
-                  fit: BoxFit.cover),
-                  Text("Del 'Yo al nos': Identidad en comunidad")
-                ],
-              )
-            );
-          },
-        );
-      }).toList(),
+    final dbCursosDestacados = DBProvider.db.getTodosCursos();
+    return FutureBuilder(
+      future: dbCursosDestacados,
+      //initialData: InitialData,
+      builder: (BuildContext context, AsyncSnapshot<List<Curso>>  snapshot) {
+        if ( snapshot.data != null ) {
+          final data = snapshot.data;
+          return CarouselSlider(
+                options: CarouselOptions(height: 200.0),
+                items: data.map((index) {
+                  return Builder(
+                    builder: (BuildContext context) {
+                      return Card(
+                          elevation: 0.5,
+                          child: Container(
+                          width: MediaQuery.of(context).size.width,
+                          margin: EdgeInsets.symmetric(horizontal: 5.0),
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(10.0),
+                            color: Colors.white,
+                          ),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.stretch,
+                            children: [
+                              Expanded(
+                                child: CachedNetworkImage(
+                                  width: double.infinity,
+                                  fit: BoxFit.fitWidth,
+                                  imageUrl: index.imagen,
+                                  placeholder: (context, url) => CircularProgressIndicator(),
+                                  errorWidget: (context, url, error) => Icon(Icons.error),
+                                ),
+                              ),
+                              Text(index.titulo, style: TextStyle(fontSize: 14.0),)
+                            ],
+                          )
+                        ),
+                      );
+                    },
+                  );
+                }).toList(),
+          );
+          
+        } else {
+          return CircularProgressIndicator();
+        }
+      },
     );
+    
   }
 
-  Widget _CursosTotales() {
-    return  CarouselSlider(
-            options: CarouselOptions(
-              autoPlay: true,
-              aspectRatio: 2.0,
-              enlargeCenterPage: true,
-            ),
-            items: imageSliders,
+  Widget _cursosTotales() {
+    final dbCursosTotales = DBProvider.db.getTodosCursos();
+
+    return FutureBuilder(
+      future: dbCursosTotales,
+      //initialData: InitialData,
+      builder: (BuildContext context, AsyncSnapshot<List<Curso>>  snapshot) {
+        if ( snapshot.data != null ) {
+          final data = snapshot.data;
+          return CarouselSlider(
+                options: CarouselOptions(
+                  height: 200.0,
+                  autoPlay: true,
+                  aspectRatio: 2.0,
+                  enlargeCenterPage: true),
+                items: data.map((index) {
+                  return Builder(
+                    builder: (BuildContext context) {
+                      return Container(
+                        margin: EdgeInsets.all(5.0),
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.all(Radius.circular(5.0)),
+                          child: Stack(
+                            children: <Widget>[
+                              CachedNetworkImage(imageUrl: index.imagen, fit: BoxFit.cover, width: 1000.0),
+                              Positioned(
+                                bottom: 0.0,
+                                left: 0.0,
+                                right: 0.0,
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                    gradient: LinearGradient(
+                                      colors: [
+                                        Color.fromARGB(200, 0, 0, 0),
+                                        Color.fromARGB(0, 0, 0, 0)
+                                      ],
+                                      begin: Alignment.bottomCenter,
+                                      end: Alignment.topCenter,
+                                    ),
+                                  ),
+                                  padding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0),
+                                  child: Text(
+                                    index.titulo,
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 20.0,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          )
+                        ),
+                      );
+                    },
+                  );
+                }).toList(),
           );
+          
+        } else {
+          return CircularProgressIndicator();
+        }
+      },
+    );
+
+
+
+
+
+    // return  CarouselSlider(
+    //         options: CarouselOptions(
+    //           autoPlay: true,
+    //           aspectRatio: 2.0,
+    //           enlargeCenterPage: true,
+    //         ),
+    //         items: imageSliders,
+    //       );
   }
 
   final List<Widget> imageSliders = imgList.map((item) => Container(

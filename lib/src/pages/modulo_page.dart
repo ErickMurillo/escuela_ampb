@@ -67,8 +67,6 @@ class _ModuloListState extends State<ModuloList> {
                                     onPressed: () async {
                                       resContenido = await contenidoProvider.getContenidos(cursoid);
                                       print("Descargar contenido");
-
-
                                       setState(() {
 
                                       });
@@ -152,6 +150,7 @@ class _ModuloListState extends State<ModuloList> {
 
                       Card(
                         child: ExpansionTile(
+                          //trailing: Icon(Icons.arrow_drop_down_circle_sharp),
                           title: Text("Introducción"),
                           initiallyExpanded: true,
                           children: [
@@ -216,7 +215,8 @@ class _ModuloListState extends State<ModuloList> {
                     GestureDetector(
                         child:  Card(
                             child: ListTile(
-                            title: Text(item.titulo),
+                              trailing: Icon(Icons.arrow_forward),
+                              title: Text(item.titulo),
                           ),
                         ),
                         onTap: () => Navigator.pushNamed(context, 'contenido', arguments: item),
