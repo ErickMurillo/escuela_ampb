@@ -9,6 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:escuela_ampb/src/providers/curso_provider.dart';
 import 'package:escuela_ampb/src/widgets/light_color.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:connectivity/connectivity.dart';
 
 
 final List<String> imgList = [
@@ -32,6 +33,7 @@ class _FirstPageState extends State<FirstPage> {
   var apiCursoProvider = CursoProvider();
   var apiModuloProvider = ModuloProvider();
   var apiReflexionProvider = ReflexionProvider();
+  var connectivityResult = (Connectivity().checkConnectivity());
 
   static const TextStyle titleOptionStyle =
       TextStyle(color: Colors.black45,fontSize: 18, fontWeight: FontWeight.bold);
@@ -68,9 +70,18 @@ class _FirstPageState extends State<FirstPage> {
 
   @override
   void initState() {
-    apiCursoProvider.getCursos();
-    apiModuloProvider.getModulos();
-    apiReflexionProvider.getReflexiones();
+    // ignore: unrelated_type_equality_checks
+    if (connectivityResult == ConnectivityResult.mobile) {
+      apiCursoProvider.getCursos();
+      apiModuloProvider.getModulos();
+      apiReflexionProvider.getReflexiones();
+    // ignore: unrelated_type_equality_checks
+    } else if (connectivityResult == ConnectivityResult.wifi) {
+      apiCursoProvider.getCursos();
+      apiModuloProvider.getModulos();
+      apiReflexionProvider.getReflexiones();
+    }
+
     super.initState();
 
   }
@@ -265,10 +276,10 @@ class _FirstPageState extends State<FirstPage> {
               );
             }).toList(),
           );
-         
+
         } else {
           return CircularProgressIndicator();
-        }  
+        }
       },
     );
   }
@@ -316,13 +327,13 @@ class _FirstPageState extends State<FirstPage> {
                   );
                 }).toList(),
           );
-          
+
         } else {
           return CircularProgressIndicator();
         }
       },
     );
-    
+
   }
 
   Widget _cursosTotales() {
@@ -384,7 +395,7 @@ class _FirstPageState extends State<FirstPage> {
                   );
                 }).toList(),
           );
-          
+
         } else {
           return CircularProgressIndicator();
         }
