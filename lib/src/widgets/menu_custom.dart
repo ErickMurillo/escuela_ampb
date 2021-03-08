@@ -1,3 +1,4 @@
+import 'package:escuela_ampb/src/searching/buscador.dart';
 import 'package:flutter/material.dart';
 
 class MyCustomAppBar extends StatelessWidget implements PreferredSizeWidget {
@@ -25,14 +26,22 @@ class MyCustomAppBar extends StatelessWidget implements PreferredSizeWidget {
             padding: EdgeInsets.all(20),
             child: AppBar(
                     title: Text(this.texto),
-                    shadowColor: Colors.transparent, 
+                    shadowColor: Colors.transparent,
+                    actions: [
+                      IconButton(
+                        icon: Icon(Icons.search),
+                        onPressed: (){
+                          showSearch(context: context, delegate: BuscadorCurso('Buscar...') );
+                        }
+                      )
+                    ],
                   ) ,
           ),
         ),
       ],
     );
   }
-  
+
  @override
   Size get preferredSize => Size.fromHeight(height);
 }

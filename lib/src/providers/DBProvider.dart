@@ -197,6 +197,17 @@ class DBProvider{
         return list;
     }
 
+    Future<List<Curso>> getCursosName(String query) async{
+        final db = await database;
+        final res = await db.rawQuery("SELECT * FROM Curso WHERE titulo LIKE '%$query%' OR descripcion LIKE '%$query%'");
+
+        List <Curso> list = res.isNotEmpty
+                                    ? res.map((e) => Curso.fromJson(e)).toList()
+                                    : [];
+
+        return list;
+    }
+
     Future<List<Modulo>> getTodosModulos() async{
         final db = await database;
         final res = await db.query('Modulo');

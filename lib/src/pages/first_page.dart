@@ -41,32 +41,32 @@ class _FirstPageState extends State<FirstPage> {
   static const TextStyle subtitleOptionStyle =
       TextStyle(color: Colors.black45,fontSize: 14, fontWeight: FontWeight.bold);
 
-  static const TextStyle optionStyle =
-      TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
-  static const List<Widget> _widgetOptions = <Widget>[
-    Text(
-      'Index 0: Home',
-      style: optionStyle,
-    ),
-    Text(
-      'Index 1: Buscar',
-      style: optionStyle,
-    ),
-    Text(
-      'Index 2: Lista',
-      style: optionStyle,
-    ),
-    Text(
-      'Index 3: Libros',
-      style: optionStyle,
-    ),
-  ];
+  // static const TextStyle optionStyle =
+  //     TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
+  // static const List<Widget> _widgetOptions = <Widget>[
+  //   Text(
+  //     'Index 0: Home',
+  //     style: optionStyle,
+  //   ),
+  //   Text(
+  //     'Index 1: Buscar',
+  //     style: optionStyle,
+  //   ),
+  //   Text(
+  //     'Index 2: Lista',
+  //     style: optionStyle,
+  //   ),
+  //   Text(
+  //     'Index 3: Libros',
+  //     style: optionStyle,
+  //   ),
+  // ];
 
-  void _onItemTapped(int index) {
-    setState(() {
-      _selectedIndex = index;
-    });
-  }
+  // void _onItemTapped(int index) {
+  //   setState(() {
+  //     _selectedIndex = index;
+  //   });
+  // }
 
   @override
   void initState() {

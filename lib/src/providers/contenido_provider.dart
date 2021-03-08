@@ -11,7 +11,7 @@ class ContenidoProvider{
     String baseUrl = 'http://www.escuelamesoamericana.org';
 
     Future<List<Contenido>> getContenidos(int id) async {
-        var url = baseUrl + "/aprende/api/contenidos/filtro/${id}";
+        var url = baseUrl + "/aprende/api/contenidos/filtro/$id";
         Response response = await Dio(BaseOptions(
             connectTimeout: 5000,
             receiveTimeout: 100000,
@@ -22,10 +22,10 @@ class ContenidoProvider{
         final decode = json.decode(data.data);
 
         return (decode as List).map((contenido) {
-           
+
             DBProvider.db.insertContenido(Contenido.fromJson(contenido));
         }).toList();
-       
+
     }
 }
 

@@ -6,6 +6,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:escuela_ampb/src/models/curso_model.dart';
 import 'package:escuela_ampb/src/providers/DBProvider.dart';
 
+// ignore: must_be_immutable
 class ListaCursoPage extends StatelessWidget {
   Future<List<Curso>> cursos = DBProvider.db.getTodosCursos();
   @override
@@ -37,12 +38,12 @@ class ListaCursoPage extends StatelessWidget {
                     trailing: Icon(Icons.arrow_forward_ios),
                     isThreeLine: true,
                   );
-                } 
+                }
               );
             } else {
               return Center( child: CircularProgressIndicator() );
             }
-            
+
           }
         ),
       ),
