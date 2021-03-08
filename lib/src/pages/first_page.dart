@@ -4,6 +4,7 @@ import 'package:escuela_ampb/src/models/reflexion_model.dart';
 import 'package:escuela_ampb/src/providers/DBProvider.dart';
 import 'package:escuela_ampb/src/providers/modulo_provider.dart';
 import 'package:escuela_ampb/src/providers/reflexion_provider.dart';
+import 'package:escuela_ampb/src/searching/buscador.dart';
 import 'package:flutter/material.dart';
 // import 'package:escuela_ampb/src/models/curso_model.dart';
 import 'package:escuela_ampb/src/providers/curso_provider.dart';
@@ -206,6 +207,7 @@ class _FirstPageState extends State<FirstPage> {
               Text("Formación", style: TextStyle(color: Colors.white, fontSize: 30, fontWeight: FontWeight.bold)),
               SizedBox(height: 22.0),
               TextField(
+                onTap: () => showSearch(context: context, delegate: BuscadorCurso('Buscar...') ),
                 autofocus: false,
                 style: TextStyle(fontSize: 14.0, color: Colors.black87, fontWeight: FontWeight.bold),
                 decoration: InputDecoration(
