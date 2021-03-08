@@ -2,13 +2,13 @@
 
 import 'package:escuela_ampb/src/pages/first_page.dart';
 import 'package:escuela_ampb/src/pages/lista_curso_page.dart';
-import 'package:escuela_ampb/src/pages/modulo_page2.dart';
+//import 'package:escuela_ampb/src/pages/modulo_page2.dart';
 import 'package:escuela_ampb/src/pages/notas_page.dart';
 import 'package:escuela_ampb/src/services/descarga_provider.dart';
 import 'package:flutter/material.dart';
 
 import 'package:escuela_ampb/src/pages/contenido_page.dart';
-import 'package:escuela_ampb/src/pages/home_page.dart';
+//import 'package:escuela_ampb/src/pages/home_page.dart';
 import 'package:escuela_ampb/src/pages/modulo_page.dart';
 //import 'package:path_provider/path_provider.dart';
 import 'package:provider/provider.dart';

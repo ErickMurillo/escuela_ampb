@@ -71,16 +71,16 @@ class _FirstPageState extends State<FirstPage> {
   @override
   void initState() {
     // ignore: unrelated_type_equality_checks
-    if (connectivityResult == ConnectivityResult.mobile) {
+    // if (connectivityResult == ConnectivityResult.mobile) {
+    //   apiCursoProvider.getCursos();
+    //   apiModuloProvider.getModulos();
+    //   apiReflexionProvider.getReflexiones();
+    // // ignore: unrelated_type_equality_checks
+    // } else if (connectivityResult == ConnectivityResult.wifi) {
       apiCursoProvider.getCursos();
       apiModuloProvider.getModulos();
       apiReflexionProvider.getReflexiones();
-    // ignore: unrelated_type_equality_checks
-    } else if (connectivityResult == ConnectivityResult.wifi) {
-      apiCursoProvider.getCursos();
-      apiModuloProvider.getModulos();
-      apiReflexionProvider.getReflexiones();
-    }
+    // }
 
     super.initState();
 
