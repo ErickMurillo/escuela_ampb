@@ -31,15 +31,23 @@ class CursoProvider{
 
     Future<List<Curso>> getCursos() async {
         var url = baseUrl + "/aprende/api/cursos/";
+       
         Response response = await Dio(BaseOptions(
             connectTimeout: 5000,
             receiveTimeout: 100000,
             responseType: ResponseType.plain
 
         )).get(url);
-        //final data = response;
+        
+         //final data = response;
         final decode = json.decode(response.data);
+        return (decode as List).map((curso) {
 
+            // print('Inserting $curso');
+            DBProvider.db.insertCurso(Curso.fromJson(curso));
+        }).toList();
+     
+       
         // print("printing the decode");
         // for (var item in decode) {
          
@@ -50,11 +58,7 @@ class CursoProvider{
           
         // }
 
-        return (decode as List).map((curso) {
-
-            // print('Inserting $curso');
-            DBProvider.db.insertCurso(Curso.fromJson(curso));
-        }).toList();
+        
     }
 }
 

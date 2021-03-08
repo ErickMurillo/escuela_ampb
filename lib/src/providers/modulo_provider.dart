@@ -14,6 +14,7 @@ class ModuloProvider{
 
     Future<List<Modulo>> getModulos() async {
         var url = baseUrl + "/aprende/api/modulos/";
+        
         Response response = await Dio(BaseOptions(
             connectTimeout: 5000,
             receiveTimeout: 100000,
@@ -23,11 +24,11 @@ class ModuloProvider{
         final data = response;
         final decode = json.decode(data.data);
 
-
-
         return (decode as List).map((modulo) {
             //print('Inserting $modulo');
             DBProvider.db.insertModulo(Modulo.fromJson(modulo));
         }).toList();
+        
+      
     }
 }

@@ -12,6 +12,7 @@ class ContenidoProvider{
 
     Future<List<Contenido>> getContenidos(int id) async {
         var url = baseUrl + "/aprende/api/contenidos/filtro/$id";
+        
         Response response = await Dio(BaseOptions(
             connectTimeout: 5000,
             receiveTimeout: 100000,
@@ -25,6 +26,8 @@ class ContenidoProvider{
 
             DBProvider.db.insertContenido(Contenido.fromJson(contenido));
         }).toList();
+        
+      
 
     }
 }

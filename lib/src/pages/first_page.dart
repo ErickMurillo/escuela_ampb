@@ -102,7 +102,9 @@ class _FirstPageState extends State<FirstPage> {
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
                     Text("Cursos destacados",style: titleOptionStyle),
-                    Text("ver todos",style: subtitleOptionStyle),
+                    GestureDetector(
+                      child: Text("ver todos",style: subtitleOptionStyle),
+                      onTap: () => Navigator.pushNamed(context, "lista_cursos"),),
                   ],
                 )),
               _cursosDestacados(),
@@ -112,7 +114,9 @@ class _FirstPageState extends State<FirstPage> {
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
                     Text("Cursos",style: titleOptionStyle),
-                    Text("ver todos",style: subtitleOptionStyle),
+                    GestureDetector(
+                      child: Text("ver todos",style: subtitleOptionStyle),
+                      onTap: () => Navigator.pushNamed(context, "lista_cursos"),),
                   ],
                 )),
                 _cursosTotales()
@@ -129,34 +133,32 @@ class _FirstPageState extends State<FirstPage> {
               icon: Icon(Icons.home),
               label: 'Home',
             ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.search),
-              label: 'Buscar',
-            ),
+            // BottomNavigationBarItem(
+            //   icon: Icon(Icons.search),
+            //   label: 'Buscar',
+            // ),
             BottomNavigationBarItem(
               icon: Icon(Icons.list),
               label: 'Lista',
             ),
             BottomNavigationBarItem(
               icon: Icon(Icons.book),
-              label: 'Libros',
+              label: 'Notas',
             ),
           ],
           currentIndex: _selectedIndex,
           unselectedItemColor: Colors.black26,
           selectedItemColor: Colors.amber[800],
+          showUnselectedLabels: false,
           onTap:(_selectedIndex){
             switch(_selectedIndex){
               case 0:
                 Navigator.pushNamed(context, "/");
                 break;
               case 1:
-                Navigator.pushNamed(context, "buscador");
-                break;
-              case 2:
                 Navigator.pushNamed(context, "lista_cursos");
                 break;
-               case 3:
+               case 2:
                 Navigator.pushNamed(context, "notas");
                 break;
             }
@@ -207,11 +209,12 @@ class _FirstPageState extends State<FirstPage> {
                 autofocus: false,
                 style: TextStyle(fontSize: 14.0, color: Colors.black87, fontWeight: FontWeight.bold),
                 decoration: InputDecoration(
+                  suffixIcon: Icon(Icons.search),
                   filled: true,
                   fillColor: Colors.white,
                   hintText: '¡Busque nuevos conocimientos!',
                   contentPadding:
-                      const EdgeInsets.only(left: 14.0, bottom: 8.0, top: 8.0),
+                      const EdgeInsets.only(left: 34.0, bottom: 8.0, top: 14.0),
                   focusedBorder: OutlineInputBorder(
                     borderSide: BorderSide(color: Colors.white),
                     borderRadius: BorderRadius.circular(22),

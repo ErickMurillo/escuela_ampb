@@ -11,6 +11,7 @@ class ReflexionProvider{
 
     Future<List<Reflexion>> getReflexiones() async {
         var url = baseUrl + "/aprende/api/reflexion/";
+       
         Response response = await Dio(BaseOptions(
             connectTimeout: 5000,
             receiveTimeout: 100000,
@@ -24,5 +25,7 @@ class ReflexionProvider{
             //print('Inserting $reflexion');
             DBProvider.db.insertReflexion(Reflexion.fromJson(reflexion));
         }).toList();
+        
+      
     }
 }

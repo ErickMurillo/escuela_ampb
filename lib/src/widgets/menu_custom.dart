@@ -4,11 +4,13 @@ import 'package:flutter/material.dart';
 class MyCustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   final double height;
   final String texto;
+  final bool search;
 
   const MyCustomAppBar({
     Key key,
     @required this.height,
-    @required this.texto
+    @required this.texto,
+    this.search
   }) : super(key: key);
 
   @override
@@ -27,14 +29,17 @@ class MyCustomAppBar extends StatelessWidget implements PreferredSizeWidget {
             child: AppBar(
                     title: Text(this.texto),
                     shadowColor: Colors.transparent,
-                    actions: [
-                      IconButton(
-                        icon: Icon(Icons.search),
-                        onPressed: (){
-                          showSearch(context: context, delegate: BuscadorCurso('Buscar...') );
-                        }
-                      )
-                    ],
+                    actions: (this.search) ? [
+                      
+                        IconButton(
+                          icon: Icon(Icons.search),
+                          onPressed: (){
+                            showSearch(context: context, delegate: BuscadorCurso('Buscar...') );
+                          }
+                        )
+                    
+                        
+                    ]: [],
                   ) ,
           ),
         ),
