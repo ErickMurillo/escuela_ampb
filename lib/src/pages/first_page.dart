@@ -282,30 +282,33 @@ class _FirstPageState extends State<FirstPage> {
                 items: data.map((index) {
                   return Builder(
                     builder: (BuildContext context) {
-                      return Card(
-                          elevation: 0.5,
-                          child: Container(
-                          width: MediaQuery.of(context).size.width,
-                          margin: EdgeInsets.symmetric(horizontal: 5.0),
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(10.0),
-                            color: Colors.white,
-                          ),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.stretch,
-                            children: [
-                              Expanded(
-                                child: CachedNetworkImage(
-                                  width: double.infinity,
-                                  fit: BoxFit.fitWidth,
-                                  imageUrl: index.imagen,
-                                  placeholder: (context, url) => CircularProgressIndicator(),
-                                  errorWidget: (context, url, error) => Icon(Icons.error),
+                      return GestureDetector(
+                        onTap: () => Navigator.pushNamed(context, 'modulos', arguments: [index.id, index.titulo]),
+                        child: Card(
+                            elevation: 0.5,
+                            child: Container(
+                            width: MediaQuery.of(context).size.width,
+                            margin: EdgeInsets.symmetric(horizontal: 5.0),
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10.0),
+                              color: Colors.white,
+                            ),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.stretch,
+                              children: [
+                                Expanded(
+                                  child: CachedNetworkImage(
+                                    width: double.infinity,
+                                    fit: BoxFit.fitWidth,
+                                    imageUrl: index.imagen,
+                                    placeholder: (context, url) => CircularProgressIndicator(),
+                                    errorWidget: (context, url, error) => Icon(Icons.error),
+                                  ),
                                 ),
-                              ),
-                              Text(index.titulo, style: TextStyle(fontSize: 14.0),)
-                            ],
-                          )
+                                Text(index.titulo, style: TextStyle(fontSize: 14.0),)
+                              ],
+                            )
+                          ),
                         ),
                       );
                     },
@@ -339,41 +342,44 @@ class _FirstPageState extends State<FirstPage> {
                 items: data.map((index) {
                   return Builder(
                     builder: (BuildContext context) {
-                      return Container(
-                        margin: EdgeInsets.all(5.0),
-                        child: ClipRRect(
-                          borderRadius: BorderRadius.all(Radius.circular(5.0)),
-                          child: Stack(
-                            children: <Widget>[
-                              CachedNetworkImage(imageUrl: index.imagen, fit: BoxFit.cover, width: 1000.0),
-                              Positioned(
-                                bottom: 0.0,
-                                left: 0.0,
-                                right: 0.0,
-                                child: Container(
-                                  decoration: BoxDecoration(
-                                    gradient: LinearGradient(
-                                      colors: [
-                                        Color.fromARGB(200, 0, 0, 0),
-                                        Color.fromARGB(0, 0, 0, 0)
-                                      ],
-                                      begin: Alignment.bottomCenter,
-                                      end: Alignment.topCenter,
+                      return GestureDetector(
+                        onTap: () => Navigator.pushNamed(context, 'modulos', arguments: [index.id, index.titulo]),
+                        child: Container(
+                          margin: EdgeInsets.all(5.0),
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.all(Radius.circular(5.0)),
+                            child: Stack(
+                              children: <Widget>[
+                                CachedNetworkImage(imageUrl: index.imagen, fit: BoxFit.cover, width: 1000.0),
+                                Positioned(
+                                  bottom: 0.0,
+                                  left: 0.0,
+                                  right: 0.0,
+                                  child: Container(
+                                    decoration: BoxDecoration(
+                                      gradient: LinearGradient(
+                                        colors: [
+                                          Color.fromARGB(200, 0, 0, 0),
+                                          Color.fromARGB(0, 0, 0, 0)
+                                        ],
+                                        begin: Alignment.bottomCenter,
+                                        end: Alignment.topCenter,
+                                      ),
                                     ),
-                                  ),
-                                  padding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0),
-                                  child: Text(
-                                    index.titulo,
-                                    style: TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 20.0,
-                                      fontWeight: FontWeight.bold,
+                                    padding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0),
+                                    child: Text(
+                                      index.titulo,
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 20.0,
+                                        fontWeight: FontWeight.bold,
+                                      ),
                                     ),
                                   ),
                                 ),
-                              ),
-                            ],
-                          )
+                              ],
+                            )
+                          ),
                         ),
                       );
                     },
