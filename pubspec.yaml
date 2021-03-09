@@ -38,10 +38,16 @@ dependencies:
   image_downloader: ^0.20.1
   http:
   carousel_slider: ^3.0.0
+  flutter_launcher_icons: "^0.8.1"
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
+
+flutter_icons:
+  android: "launcher_icon"
+  ios: true
+  image_path: "assets/icon/icon.png"
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
