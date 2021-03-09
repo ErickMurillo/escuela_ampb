@@ -38,8 +38,6 @@ dependencies:
   image_downloader: ^0.20.1
   http:
   carousel_slider: ^3.0.0
-  connectivity: ^2.0.2
-  intl: ^0.16.1
 
 dev_dependencies:
   flutter_test:

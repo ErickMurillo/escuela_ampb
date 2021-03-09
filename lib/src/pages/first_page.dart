@@ -6,21 +6,9 @@ import 'package:escuela_ampb/src/providers/modulo_provider.dart';
 import 'package:escuela_ampb/src/providers/reflexion_provider.dart';
 import 'package:escuela_ampb/src/searching/buscador.dart';
 import 'package:flutter/material.dart';
-// import 'package:escuela_ampb/src/models/curso_model.dart';
 import 'package:escuela_ampb/src/providers/curso_provider.dart';
 import 'package:escuela_ampb/src/widgets/light_color.dart';
 import 'package:carousel_slider/carousel_slider.dart';
-import 'package:connectivity/connectivity.dart';
-
-
-final List<String> imgList = [
-  'https://images.unsplash.com/photo-1520342868574-5fa3804e551c?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=6ff92caffcdd63681a35134a6770ed3b&auto=format&fit=crop&w=1951&q=80',
-  'https://images.unsplash.com/photo-1522205408450-add114ad53fe?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=368f45b0888aeb0b7b08e3a1084d3ede&auto=format&fit=crop&w=1950&q=80',
-  'https://images.unsplash.com/photo-1519125323398-675f0ddb6308?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=94a1e718d89ca60a6337a6008341ca50&auto=format&fit=crop&w=1950&q=80',
-  'https://images.unsplash.com/photo-1523205771623-e0faa4d2813d?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=89719a0d55dd05e2deae4120227e6efc&auto=format&fit=crop&w=1953&q=80',
-  'https://images.unsplash.com/photo-1508704019882-f9cf40e475b4?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=8c6e5e3aba713b17aa1fe71ab4f0ae5b&auto=format&fit=crop&w=1352&q=80',
-  'https://images.unsplash.com/photo-1519985176271-adb1088fa94c?ixlib=rb-0.3.5&ixid=eyJhcHBfaWQiOjEyMDd9&s=a0c8d632e977f94e5d312d9893258f59&auto=format&fit=crop&w=1355&q=80'
-];
 
 class FirstPage extends StatefulWidget {
 
@@ -34,7 +22,6 @@ class _FirstPageState extends State<FirstPage> {
   var apiCursoProvider = CursoProvider();
   var apiModuloProvider = ModuloProvider();
   var apiReflexionProvider = ReflexionProvider();
-  var connectivityResult = (Connectivity().checkConnectivity());
 
   static const TextStyle titleOptionStyle =
       TextStyle(color: Colors.black45,fontSize: 18, fontWeight: FontWeight.bold);
@@ -42,46 +29,12 @@ class _FirstPageState extends State<FirstPage> {
   static const TextStyle subtitleOptionStyle =
       TextStyle(color: Colors.black45,fontSize: 14, fontWeight: FontWeight.bold);
 
-  // static const TextStyle optionStyle =
-  //     TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
-  // static const List<Widget> _widgetOptions = <Widget>[
-  //   Text(
-  //     'Index 0: Home',
-  //     style: optionStyle,
-  //   ),
-  //   Text(
-  //     'Index 1: Buscar',
-  //     style: optionStyle,
-  //   ),
-  //   Text(
-  //     'Index 2: Lista',
-  //     style: optionStyle,
-  //   ),
-  //   Text(
-  //     'Index 3: Libros',
-  //     style: optionStyle,
-  //   ),
-  // ];
-
-  // void _onItemTapped(int index) {
-  //   setState(() {
-  //     _selectedIndex = index;
-  //   });
-  // }
 
   @override
   void initState() {
-    // ignore: unrelated_type_equality_checks
-    // if (connectivityResult == ConnectivityResult.mobile) {
-    //   apiCursoProvider.getCursos();
-    //   apiModuloProvider.getModulos();
-    //   apiReflexionProvider.getReflexiones();
-    // // ignore: unrelated_type_equality_checks
-    // } else if (connectivityResult == ConnectivityResult.wifi) {
       apiCursoProvider.getCursos();
       apiModuloProvider.getModulos();
       apiReflexionProvider.getReflexiones();
-    // }
 
     super.initState();
 
@@ -176,7 +129,7 @@ class _FirstPageState extends State<FirstPage> {
       children: [
         Container(
           width: double.infinity,
-          height: 240.0,
+          height: 220.0,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.only(
                         bottomLeft:  const  Radius.circular(40.0),
@@ -185,16 +138,16 @@ class _FirstPageState extends State<FirstPage> {
           )
         ),
         Positioned(
-            top: 20,
+            top: -10,
             right: -50,
             child: _circularContainer(200, LightColor.lightpurple)),
         Positioned(
             top: -100,
-            left: -45,
+            left: -15,
             child: _circularContainer(width * .5, LightColor.darkpurple)),
         Positioned(
             top: -180,
-            right: -30,
+            right: -20,
             child: _circularContainer(width * .7, Colors.transparent,
                 borderColor: Colors.white38)),
         Container(
@@ -206,27 +159,54 @@ class _FirstPageState extends State<FirstPage> {
               SizedBox(height: 18.0),
               Text("Formación", style: TextStyle(color: Colors.white, fontSize: 30, fontWeight: FontWeight.bold)),
               SizedBox(height: 22.0),
-              TextField(
-                onTap: () => showSearch(context: context, delegate: BuscadorCurso('Buscar...') ),
-                autofocus: false,
-                style: TextStyle(fontSize: 14.0, color: Colors.black87, fontWeight: FontWeight.bold),
-                decoration: InputDecoration(
-                  suffixIcon: Icon(Icons.search),
-                  filled: true,
-                  fillColor: Colors.white,
-                  hintText: '¡Busque nuevos conocimientos!',
-                  contentPadding:
-                      const EdgeInsets.only(left: 34.0, bottom: 8.0, top: 14.0),
-                  focusedBorder: OutlineInputBorder(
-                    borderSide: BorderSide(color: Colors.white),
-                    borderRadius: BorderRadius.circular(22),
-                  ),
-                  enabledBorder: UnderlineInputBorder(
-                    borderSide: BorderSide(color: Colors.white),
-                    borderRadius: BorderRadius.circular(22),
+              Container(
+                padding: EdgeInsets.symmetric( horizontal: 30),
+                width: width,
+                child: GestureDetector(
+                    onTap: () {
+                      showSearch(context: context, delegate: BuscadorCurso('Buscar...'));
+                    },
+                    child: Container(
+                    padding: EdgeInsets.symmetric(horizontal: 20, vertical: 13),
+                    width: double.infinity,
+                    child: Row(
+                      children: [
+                        Text("Busque nuevos conocimientos?"),
+                        Spacer(),
+                        Icon(Icons.search)
+                      ],
+                    ),
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(100),
+                      boxShadow: <BoxShadow>[
+                        BoxShadow(color: Colors.black12, blurRadius: 5, offset: Offset(0,5))
+                      ]
+                    ),
                   ),
                 ),
-              ),
+              )
+              // TextField(
+              //   onTap: () => showSearch(context: context, delegate: BuscadorCurso('Buscar...') ),
+              //   autofocus: false,
+              //   style: TextStyle(fontSize: 14.0, color: Colors.black87, fontWeight: FontWeight.bold),
+              //   decoration: InputDecoration(
+              //     suffixIcon: Icon(Icons.search),
+              //     filled: true,
+              //     fillColor: Colors.white,
+              //     hintText: '¡Busque nuevos conocimientos!',
+              //     contentPadding:
+              //         const EdgeInsets.only(left: 34.0, bottom: 8.0, top: 14.0),
+              //     focusedBorder: OutlineInputBorder(
+              //       borderSide: BorderSide(color: Colors.white),
+              //       borderRadius: BorderRadius.circular(22),
+              //     ),
+              //     enabledBorder: UnderlineInputBorder(
+              //       borderSide: BorderSide(color: Colors.white),
+              //       borderRadius: BorderRadius.circular(22),
+              //     ),
+              //   ),
+              // ),
             ]
           )
         )
@@ -406,60 +386,5 @@ class _FirstPageState extends State<FirstPage> {
         }
       },
     );
-
-
-
-
-
-    // return  CarouselSlider(
-    //         options: CarouselOptions(
-    //           autoPlay: true,
-    //           aspectRatio: 2.0,
-    //           enlargeCenterPage: true,
-    //         ),
-    //         items: imageSliders,
-    //       );
   }
-
-  final List<Widget> imageSliders = imgList.map((item) => Container(
-  child: Container(
-    margin: EdgeInsets.all(5.0),
-    child: ClipRRect(
-      borderRadius: BorderRadius.all(Radius.circular(5.0)),
-      child: Stack(
-        children: <Widget>[
-          Image.network(item, fit: BoxFit.cover, width: 1000.0),
-          Positioned(
-            bottom: 0.0,
-            left: 0.0,
-            right: 0.0,
-            child: Container(
-              decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  colors: [
-                    Color.fromARGB(200, 0, 0, 0),
-                    Color.fromARGB(0, 0, 0, 0)
-                  ],
-                  begin: Alignment.bottomCenter,
-                  end: Alignment.topCenter,
-                ),
-              ),
-              padding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0),
-              child: Text(
-                'Curso. ${imgList.indexOf(item)}',
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 20.0,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-            ),
-          ),
-        ],
-      )
-    ),
-  ),
-)).toList();
-
-
 }
