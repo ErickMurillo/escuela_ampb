@@ -3,7 +3,12 @@ import 'package:escuela_ampb/src/widgets/menu_custom.dart';
 import 'package:flutter/material.dart';
 
 // ignore: must_be_immutable
-class NotasPage extends StatelessWidget {
+class NotasPage extends StatefulWidget {
+  @override
+  _NotasPageState createState() => _NotasPageState();
+}
+
+class _NotasPageState extends State<NotasPage> {
   int _selectedIndex = 2;
 
   @override
@@ -20,7 +25,7 @@ class NotasPage extends StatelessWidget {
             items: const <BottomNavigationBarItem>[
               BottomNavigationBarItem(
                 icon: Icon(Icons.home),
-                label: 'Home',
+                label: 'Inicio',
               ),
               // BottomNavigationBarItem(
               //   icon: Icon(Icons.search),

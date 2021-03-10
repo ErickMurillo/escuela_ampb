@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:escuela_ampb/src/models/contenido_model.dart';
 import 'package:escuela_ampb/src/models/curso_model.dart';
 import 'package:escuela_ampb/src/models/modulo_model.dart';
+import 'package:escuela_ampb/src/models/notas_model.dart';
 import 'package:escuela_ampb/src/models/reflexion_model.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
@@ -72,6 +73,14 @@ class DBProvider{
                     'autor TEXT,'
                     'fecha TEXT,'
                     'activo TEXT'
+                    ')'
+                );
+
+                await db.execute(
+                    'CREATE TABLE Notas('
+                    'id INTEGER PRIMARY KEY,'
+                    'titulo TEXT,'
+                    'contenido TEXT'
                     ')'
                 );
             }
@@ -159,6 +168,16 @@ class DBProvider{
         }
     }
 
+    Future<int> insertItem(Nota item) async {
+      final db = await database;
+      int id = await db.insert(
+        'Notas',
+        item.toMap(),
+        conflictAlgorithm: ConflictAlgorithm.replace,
+      );
+      return id;
+    }
+
     //SELECT - obtener informacion
 
     //obtenes registro por id
@@ -183,6 +202,18 @@ class DBProvider{
         final db = await database;
         final res = await db.query('Reflexion', where: 'id = ?', whereArgs: [id]);
         return res.isNotEmpty ? Reflexion.fromJson(res.first) : null;
+    }
+
+    Future<List<Nota>> getNotas() async {
+      final db = await database;
+      final List<Map<String, dynamic>> maps = await db.query('Notas');
+      return List.generate(maps.length, (i) {
+        return Nota(
+          maps[i]['id'],
+          maps[i]['name'],
+          maps[i]['priority'],
+        );
+      });
     }
 
     //Todos los resgistros

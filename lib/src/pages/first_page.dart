@@ -85,7 +85,7 @@ class _FirstPageState extends State<FirstPage> {
           items: const <BottomNavigationBarItem>[
             BottomNavigationBarItem(
               icon: Icon(Icons.home),
-              label: 'Home',
+              label: 'Inicio',
             ),
             // BottomNavigationBarItem(
             //   icon: Icon(Icons.search),
