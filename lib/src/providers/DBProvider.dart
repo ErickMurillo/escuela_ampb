@@ -168,7 +168,7 @@ class DBProvider{
         }
     }
 
-    Future<int> insertItem(Nota item) async {
+    Future<int> insertNota(Nota item) async {
       final db = await database;
       int id = await db.insert(
         'Notas',
@@ -221,7 +221,7 @@ class DBProvider{
         final db = await database;
         final res = await db.query('Curso');
 
-        List <Curso> list = res.isNotEmpty
+        List<Curso> list = res.isNotEmpty
                                     ? res.map((e) => Curso.fromJson(e)).toList()
                                     : [];
 

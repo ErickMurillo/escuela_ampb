@@ -30,6 +30,7 @@ class _ModuloListState extends State<ModuloList> {
     ContenidoProvider contenidoProvider =  ContenidoProvider();
     dynamic resContenido;
     List<int> idsModulos = List<int>();
+    final keyScaffold = GlobalKey<ScaffoldState>();
 
     @override
     Widget build(BuildContext context) {
@@ -58,6 +59,7 @@ class _ModuloListState extends State<ModuloList> {
                     var listModulos = snapshot.data[0];
                     var listContenido = snapshot.data[1];
                     return Scaffold(
+                        key: keyScaffold,
                         appBar: AppBar(
                             title: Text(cursoName),
                             actions: [
@@ -66,7 +68,10 @@ class _ModuloListState extends State<ModuloList> {
                                     tooltip: 'Descargar Curso',
                                     onPressed: () async {
                                       resContenido = await contenidoProvider.getContenidos(cursoid);
-                                      print("Descargar contenido");
+                                      //print("Descargar contenido");
+                                      keyScaffold.currentState.showSnackBar(SnackBar(
+                                        content: Text("Contenido Descargado!"),
+                                      ));
                                       setState(() {
 
                                       });
