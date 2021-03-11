@@ -4,9 +4,9 @@ import 'package:escuela_ampb/src/models/reflexion_model.dart';
 import 'package:escuela_ampb/src/providers/DBProvider.dart';
 import 'package:escuela_ampb/src/providers/modulo_provider.dart';
 import 'package:escuela_ampb/src/providers/reflexion_provider.dart';
+import 'package:escuela_ampb/src/providers/curso_provider.dart';
 import 'package:escuela_ampb/src/searching/buscador.dart';
 import 'package:flutter/material.dart';
-import 'package:escuela_ampb/src/providers/curso_provider.dart';
 import 'package:escuela_ampb/src/widgets/light_color.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 
@@ -44,9 +44,9 @@ class _FirstPageState extends State<FirstPage> {
   void initState() {
     super.initState();
     setState(() {
-      apiCursoProvider.getCursos();
-      apiModuloProvider.getModulos();
-      apiReflexionProvider.getReflexiones();
+      //   apiCursoProvider.getCursos();
+      //   apiModuloProvider.getModulos();
+      //   apiReflexionProvider.getReflexiones();
     });
   }
 
