@@ -40,23 +40,32 @@ class _ContenidoPageState extends State<ContenidoPage> {
 
             child: Column(
                 children: [
+                    Container(
+                      padding: EdgeInsets.all(15.0),
+                      child: Text(
+                        contenido.titulo,
+                        style: TextStyle(fontSize: 24.0,fontWeight: FontWeight.bold, color: Color(0xFF4f002b)),)),
+                    //SizedBox(height: 10.0),
+                    Divider(height: 5,thickness: 3,),
+                    Container(
+                      padding: EdgeInsets.all(10.0),
+                      child: Html(
+                          data: _getimg(contenido.contenido),
+                          customRender: {
+                              "img": (RenderContext context, Widget child, attributes, _)  {
 
-                    Html(
-                        data: _getimg(contenido.contenido),
-                        customRender: {
-                            "img": (RenderContext context, Widget child, attributes, _)  {
+                                  //File filetoimg = File(_.attributes['src']);
+                                  String _imgBody = _.attributes['src'];
 
-                                //File filetoimg = File(_.attributes['src']);
-                                String _imgBody = _.attributes['src'];
+                                  return CachedNetworkImage(
+                                      imageUrl: _imgBody,
+                                      placeholder: (context, url) => Center(child: CircularProgressIndicator(),),
+                                      errorWidget: (context, url, error) => Icon(Icons.error),
+                                  );
 
-                                return CachedNetworkImage(
-                                    imageUrl: _imgBody,
-                                    placeholder: (context, url) => Center(child: CircularProgressIndicator(),),
-                                    errorWidget: (context, url, error) => Icon(Icons.error),
-                                );
-
-                            },
-                        },
+                              },
+                          },
+                      ),
                     ),
                 ],
             )

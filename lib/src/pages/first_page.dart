@@ -237,7 +237,7 @@ class _FirstPageState extends State<FirstPage> {
         if (snapshot.data != null) {
           final data = snapshot.data;
           return CarouselSlider(
-            options: CarouselOptions(height: 180.0, autoPlay: false,),
+            options: CarouselOptions(height: 180.0, autoPlay: true,),
             items: data.map((index) {
               return Builder(
                 builder: (BuildContext context) {

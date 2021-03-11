@@ -100,6 +100,23 @@ class _NotasPageState extends State<NotasPage> {
             },
             child: Card(
               child: ListTile(
+                onTap: (){
+                  print("ver el contenido");
+                   showDialog(
+                      context: context,
+                      builder: (_) => new AlertDialog(
+                            title: new Text(cantidad[index].titulo),
+                            content: new Text(cantidad[index].contenido),
+                            actions: <Widget>[
+                              FlatButton(
+                                child: Text('Cerrar'),
+                                onPressed: () {
+                                  Navigator.of(context).pop();
+                                },
+                              )
+                            ],
+                          ));
+                },
                   title: Text(cantidad[index].titulo),
                   leading: CircleAvatar(
                     child: Text(cantidad[index].id.toString()),
