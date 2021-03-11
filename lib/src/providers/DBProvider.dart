@@ -209,9 +209,9 @@ class DBProvider{
       final List<Map<String, dynamic>> maps = await db.query('Notas');
       return List.generate(maps.length, (i) {
         return Nota(
-          maps[i]['id'],
-          maps[i]['name'],
-          maps[i]['priority'],
+          id: maps[i]['id'],
+          titulo: maps[i]['titulo'],
+          contenido: maps[i]['contenido'],
         );
       });
     }
@@ -329,6 +329,27 @@ class DBProvider{
         //print(nuevoCurso.id);
         final res = await db.update('Curso', nuevoCurso.toJson(), where: 'id = ?', whereArgs: [nuevoCurso.id]);
         return res;
+    }
+
+    Future<void> updateNota(Nota item) async {
+      // Get a reference to the database.
+      final db = await database;
+      await db.update(
+        'Notas',
+        item.toMap(),
+        where: "id = ?",
+        whereArgs: [item.id],
+      );
+    }
+
+    Future<void> deleteNota(int id) async {
+      // Get a reference to the database.
+      final db = await database;
+      await db.delete(
+        'Notas',
+        where: "id = ?",
+        whereArgs: [id],
+      );
     }
 
 

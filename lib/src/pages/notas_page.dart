@@ -1,9 +1,9 @@
 
+import 'package:flutter/material.dart';
+
 import 'package:escuela_ampb/src/models/notas_model.dart';
-import 'package:escuela_ampb/src/pages/addlist_notas.dart';
 import 'package:escuela_ampb/src/providers/DBProvider.dart';
 import 'package:escuela_ampb/src/widgets/menu_custom.dart';
-import 'package:flutter/material.dart';
 
 // ignore: must_be_immutable
 class NotasPage extends StatefulWidget {
@@ -13,21 +13,6 @@ class NotasPage extends StatefulWidget {
 
 class _NotasPageState extends State<NotasPage> {
   int _selectedIndex = 2;
-  
-  //List<Nota> notaList;
-  NotasListDialog dialog;
-  NotasListDialog dialog1;
-
-  // Future showData () async {
-  //   notaList = await DBProvider.db.getNotas();
-  // }
-
-  @override
-  void initState() {
-    dialog = NotasListDialog();
-    dialog1 = NotasListDialog();
-    super.initState();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -36,12 +21,10 @@ class _NotasPageState extends State<NotasPage> {
         appBar: MyCustomAppBar(height: 120, texto: "Notas",search: false,),
         body: _listNotas(),
         floatingActionButton: FloatingActionButton(
+          backgroundColor: Color(0xFF4f002b),
           onPressed: (){
             print("agregar nota");
-            showDialog(
-              context: context,
-              builder: (BuildContext context) => dialog.buildDialog(context, Nota(0,'',''), true)
-            );
+            Navigator.pushNamed(context, 'guardar_nota', arguments: Nota.empty()).then((value) => setState(() {}));
           },
           child: Icon(Icons.add),
         ),
@@ -89,34 +72,61 @@ class _NotasPageState extends State<NotasPage> {
 
 
   Widget _listNotas() {
-    final  notaList = DBProvider.db.getNotas();
-    print("********************");
-    var cantidad = notaList;
-    print(cantidad);
-    return ListView.builder(
-      itemCount: (notaList != null) ? notaList.length : 0,
-      itemBuilder:(BuildContext context, int index) {
-        return Card(
-          child: ListTile(
-              title: Text(notaList[index].titulo),
-              leading: CircleAvatar(
-                child: Text(notaList[index].id.toString()),
-              ),
-              trailing: IconButton(
-                icon: Icon(Icons.edit),
-                onPressed: (){
-                  print("editar hp");
-                  showDialog(
-                    context: context,
-                    builder: (context) => dialog1.buildDialog(context, notaList[index], false)
-                  );
-                },
-              ),
+    return FutureBuilder(
+      future: DBProvider.db.getNotas(),
+      //initialData: InitialData,
+      builder: (BuildContext context, AsyncSnapshot snapshot) {
+        if (snapshot.data != null) {
+          final List<Nota>cantidad = snapshot.data;
+          return ListView.builder(
+          itemCount: cantidad.length,//(notaList != null) ? notaList.length : 0,
+          itemBuilder:(BuildContext context, int index) {
+
+          return Dismissible(
+            key: UniqueKey(),//Key(cantidad[index].id.toString()),
+            direction: DismissDirection.endToStart,
+            background: Container(
+              padding: EdgeInsets.only(right: 10),
+              color: Colors.red,
+              child: Align(
+                alignment: Alignment.centerRight,
+                child: Icon(Icons.delete, color: Colors.white,)),),
+            //direction: Direc,
+            onDismissed: (direction){
+              setState(() {
+                print("elimnado");
+                DBProvider.db.deleteNota(cantidad[index].id);
+              });
+            },
+            child: Card(
+              child: ListTile(
+                  title: Text(cantidad[index].titulo),
+                  leading: CircleAvatar(
+                    child: Text(cantidad[index].id.toString()),
+                  ),
+                  trailing: IconButton(
+                    icon: Icon(Icons.edit),
+                    onPressed: (){
+                      print("editar nota");
+                      Navigator.pushNamed(
+                        context,
+                        'guardar_nota',
+                        arguments: cantidad[index]).then((value) => setState(() {})  );
+                    },
+                  ),
+                ),
             ),
-        );
+          );
       }
     );
-     
+
+    } else {
+      return Center(child: CircularProgressIndicator());
+    }
+
+      },
+    );
+
   }
 
 
