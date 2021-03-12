@@ -1,4 +1,3 @@
-//import 'dart:io';
 import 'package:flutter/material.dart';
 import 'dart:async';
 
@@ -16,11 +15,13 @@ import 'package:escuela_ampb/src/providers/modulo_provider.dart';
 import 'package:escuela_ampb/src/providers/reflexion_provider.dart';
 import 'package:escuela_ampb/src/providers/curso_provider.dart';
 
+import 'package:connectivity/connectivity.dart';
+import 'package:google_fonts/google_fonts.dart';
+
 //Directory _appDocsDir;
 void main() async {
   //WidgetsFlutterBinding.ensureInitialized();
   //_appDocsDir = await getApplicationDocumentsDirectory();
-
   runApp(MyApp());
 }
 
@@ -34,6 +35,9 @@ class MyApp extends StatelessWidget {
         title: 'Material App',
         theme: ThemeData(
           primaryColor: Color(0xFF4f002b),
+          textTheme: GoogleFonts.montserratTextTheme(
+            Theme.of(context).textTheme,
+          ),
         ),
         home: SplashScreen(),
         initialRoute: '/',
@@ -68,11 +72,22 @@ class _SplashScreenState extends State<SplashScreen> {
       apiModuloProvider.getModulos();
       apiReflexionProvider.getReflexiones();
     });
-    new Timer(new Duration(seconds: 3), () {
-      // set your desired delay time here
+    checkInternet();
+  }
+
+  checkInternet() async {
+    var connectivityResult = await (Connectivity().checkConnectivity());
+    if (connectivityResult == ConnectivityResult.mobile ||
+        connectivityResult == ConnectivityResult.wifi) {
+      new Timer(new Duration(seconds: 3), () {
+        // set your desired delay time here
+        Navigator.of(context).pushReplacement(
+            new MaterialPageRoute(builder: (context) => new FirstPage()));
+      });
+    } else {
       Navigator.of(context).pushReplacement(
           new MaterialPageRoute(builder: (context) => new FirstPage()));
-    });
+    }
   }
 
   @override

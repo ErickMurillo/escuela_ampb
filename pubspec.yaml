@@ -39,6 +39,8 @@ dependencies:
   http:
   carousel_slider: ^3.0.0
   flutter_launcher_icons: "^0.8.1"
+  connectivity: ^2.0.2
+  google_fonts: ^1.1.2
 
 dev_dependencies:
   flutter_test:

@@ -186,7 +186,7 @@ class _FirstPageState extends State<FirstPage> {
                     width: double.infinity,
                     child: Row(
                       children: [
-                        Text("Busque nuevos conocimientos?"),
+                        Text("¡Busque nuevos conocimientos!"),
                         Spacer(),
                         Icon(Icons.search)
                       ],
@@ -260,17 +260,21 @@ class _FirstPageState extends State<FirstPage> {
                         margin: EdgeInsets.symmetric(horizontal: 5.0),
                         decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(15),
-                            color: Color(0xff8cc63f)),
+                            color: Colors.amber[800]),
                         child: Container(
                           margin: EdgeInsets.all(10.0),
                           child: Center(
-                              child: Text(
-                            index.texto,
-                            style: TextStyle(
-                                fontSize: 16.0,
-                                color: Colors.white,
-                                fontWeight: FontWeight.bold),
-                          )),
+                            child: Text.rich(TextSpan(
+                              children: <TextSpan>[
+                                TextSpan(text: index.texto + '\n \n'),
+                                TextSpan(text: '-' + index.autor),
+                              ],
+                              style: TextStyle(
+                                  fontSize: 16.0,
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.bold),
+                            )),
+                          ),
                         ));
                   },
                 );

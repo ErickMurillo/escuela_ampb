@@ -33,9 +33,11 @@ class ListaCursoPage extends StatelessWidget {
                     itemCount: curso.length,
                     itemBuilder: (context, index) {
                       return ListTile(
+                        contentPadding: EdgeInsets.symmetric(vertical: 10),
                         onTap: () => Navigator.pushNamed(context, 'modulos',
                             arguments: [curso[index].id, curso[index].titulo]),
                         leading: CircleAvatar(
+                          radius: 60.0,
                           child: CachedNetworkImage(
                               imageUrl: curso[index].imagen,
                               placeholder: (context, url) =>
@@ -43,11 +45,11 @@ class ListaCursoPage extends StatelessWidget {
                           backgroundColor: Colors.transparent,
                         ),
                         title: Text(curso[index].titulo),
-                        subtitle: Html(
-                            data: newFormat
-                                .format(DateTime.parse(curso[index].fecha))),
+                        // subtitle: Html(
+                        //     data: newFormat
+                        //         .format(DateTime.parse(curso[index].fecha))),
                         trailing: Icon(Icons.arrow_forward_ios),
-                        isThreeLine: true,
+                        // isThreeLine: true,
                       );
                     });
               } else {
