@@ -23,39 +23,7 @@ class ListaCursoPage extends StatelessWidget {
           texto: "Lista de cursos",
           search: true,
         ),
-        body: FutureBuilder<List<Curso>>(
-            future: DBProvider.db.getTodosCursos(),
-            builder:
-                (BuildContext context, AsyncSnapshot<List<Curso>> snapshot) {
-              if (snapshot.data != null) {
-                final curso = snapshot.data;
-                return ListView.builder(
-                    itemCount: curso.length,
-                    itemBuilder: (context, index) {
-                      return ListTile(
-                        contentPadding: EdgeInsets.symmetric(vertical: 10),
-                        onTap: () => Navigator.pushNamed(context, 'modulos',
-                            arguments: [curso[index].id, curso[index].titulo]),
-                        leading: CircleAvatar(
-                          radius: 60.0,
-                          child: CachedNetworkImage(
-                              imageUrl: curso[index].imagen,
-                              placeholder: (context, url) =>
-                                  CircularProgressIndicator()),
-                          backgroundColor: Colors.transparent,
-                        ),
-                        title: Text(curso[index].titulo),
-                        // subtitle: Html(
-                        //     data: newFormat
-                        //         .format(DateTime.parse(curso[index].fecha))),
-                        trailing: Icon(Icons.arrow_forward_ios),
-                        // isThreeLine: true,
-                      );
-                    });
-              } else {
-                return Center(child: CircularProgressIndicator());
-              }
-            }),
+        body: _list(),
         bottomNavigationBar: BottomNavigationBar(
           items: const <BottomNavigationBarItem>[
             BottomNavigationBarItem(
@@ -96,4 +64,42 @@ class ListaCursoPage extends StatelessWidget {
       ),
     );
   }
+
+  _list() => FutureBuilder<List<Curso>>(
+      future: DBProvider.db.getTodosCursos(),
+      builder: (BuildContext context, AsyncSnapshot<List<Curso>> snapshot) {
+        if (snapshot.data != null) {
+          final curso = snapshot.data;
+          return ListView.builder(
+              itemCount: curso.length,
+              itemBuilder: (context, index) {
+                return Column(
+                  children: <Widget>[
+                    ListTile(
+                      contentPadding: EdgeInsets.symmetric(vertical: 10),
+                      onTap: () => Navigator.pushNamed(context, 'modulos',
+                          arguments: [curso[index].id, curso[index].titulo]),
+                      leading: CircleAvatar(
+                        radius: 60.0,
+                        child: CachedNetworkImage(
+                            imageUrl: curso[index].imagen,
+                            placeholder: (context, url) =>
+                                CircularProgressIndicator()),
+                        backgroundColor: Colors.transparent,
+                      ),
+                      title: Text(curso[index].titulo),
+                      // subtitle: Html(
+                      //     data: newFormat
+                      //         .format(DateTime.parse(curso[index].fecha))),
+                      trailing: Icon(Icons.arrow_forward_ios),
+                      // isThreeLine: true,
+                    ),
+                    Divider(),
+                  ],
+                );
+              });
+        } else {
+          return Center(child: CircularProgressIndicator());
+        }
+      });
 }

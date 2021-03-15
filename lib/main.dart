@@ -1,3 +1,4 @@
+import 'package:escuela_ampb/src/pages/intro_curso.dart';
 import 'package:flutter/material.dart';
 import 'dart:async';
 
@@ -48,6 +49,7 @@ class MyApp extends StatelessWidget {
           'lista_cursos': (_) => ListaCursoPage(),
           'buscador': (_) => ListaCursoPage(),
           'notas': (_) => NotasPage(),
+          'intro': (_) => IntroPage(),
           //   'guardar_nota' : ( _ ) => GuardaPage(),
         },
       ),

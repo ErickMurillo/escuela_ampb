@@ -1,3 +1,4 @@
+import 'package:escuela_ampb/src/models/contenido_model.dart';
 import 'package:escuela_ampb/src/models/curso_model.dart';
 import 'package:escuela_ampb/src/models/modulo_model.dart';
 import 'package:escuela_ampb/src/providers/DBProvider.dart';
@@ -8,47 +9,27 @@ import 'package:flutter_html/flutter_html.dart';
 import 'package:html/parser.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 
-import 'package:escuela_ampb/src/models/contenido_model.dart';
-
-class ContenidoPage extends StatefulWidget {
-  ContenidoPage({Key key}) : super(key: key);
+class IntroPage extends StatefulWidget {
+  IntroPage({Key key}) : super(key: key);
 
   @override
-  _ContenidoPageState createState() => _ContenidoPageState();
+  _IntroPageState createState() => _IntroPageState();
 }
 
-class _ContenidoPageState extends State<ContenidoPage> {
-  Modulo _modulo;
-  Curso _curso;
-
+class _IntroPageState extends State<IntroPage> {
   @override
   Widget build(BuildContext context) {
-    List args = ModalRoute.of(context).settings.arguments;
-    Contenido detalleContenido = args[0];
-
+    Curso intro = ModalRoute.of(context).settings.arguments;
     return Scaffold(
-        appBar: AppBar(
+      appBar: AppBar(
           title: Text(''),
-        ),
-        endDrawer: _drawer(args[1]),
-        body: introducionCurso(detalleContenido));
-  }
-
-  _getModulo(int id) async {
-    var x = await DBProvider.db.getModuloId(id);
-    setState(() {
-      _modulo = x;
-    });
-  }
-
-  _getCurso(int id) async {
-    var x = await DBProvider.db.getCursoId(id);
-    setState(() {
-      _curso = x;
-    });
-  }
-
-  _drawer(int cursoid) => Drawer(
+          automaticallyImplyLeading: true,
+          leading: IconButton(
+            icon: Icon(Icons.arrow_back),
+            onPressed: () => Navigator.pop(context, false),
+          )),
+      body: introducionCurso(intro),
+      endDrawer: Drawer(
         child: ListView(
           padding: EdgeInsets.zero,
           children: <Widget>[
@@ -64,15 +45,14 @@ class _ContenidoPageState extends State<ContenidoPage> {
             ListTile(
               title: Text('Introducción'),
               trailing: Icon(Icons.arrow_forward),
-              onTap: () async {
-                Curso curso = await DBProvider.db.getCursoId(cursoid);
-                // Navigator.pop(context);
-                Navigator.pushNamed(context, 'intro', arguments: curso);
+              onTap: () {
+                //   Navigator.pop(context);
+                Navigator.pushNamed(context, 'intro', arguments: intro);
               },
             ),
             Divider(),
             FutureBuilder(
-                future: DBProvider.db.filterModuloIdCurso(cursoid),
+                future: DBProvider.db.filterModuloIdCurso(intro.id),
                 builder: (context, snapshot) {
                   final List<Modulo> modulo = snapshot.data;
                   if (snapshot.hasData) {
@@ -97,7 +77,7 @@ class _ContenidoPageState extends State<ContenidoPage> {
                                   },
                                 ),
                                 children: <Widget>[
-                                  _contenido(modulo[index].id, cursoid)
+                                  _contenido(modulo[index].id, intro.id)
                                 ],
                               ),
                               Divider(),
@@ -110,11 +90,8 @@ class _ContenidoPageState extends State<ContenidoPage> {
                 }),
           ],
         ),
-      );
-
-  _conteo(int id) async {
-    int x = await DBProvider.db.conteoContenido(id);
-    return x;
+      ),
+    );
   }
 
   _contenido(int id, int curso) => FutureBuilder(
@@ -145,14 +122,19 @@ class _ContenidoPageState extends State<ContenidoPage> {
         },
       );
 
-  Widget introducionCurso(Contenido contenido) {
+  _conteo(int id) async {
+    int x = await DBProvider.db.conteoContenido(id);
+    return x;
+  }
+
+  Widget introducionCurso(Curso curso) {
     return SingleChildScrollView(
         child: Column(
       children: [
         Container(
             padding: EdgeInsets.all(15.0),
             child: Text(
-              contenido.titulo,
+              'Introducción',
               style: TextStyle(
                   fontSize: 24.0,
                   fontWeight: FontWeight.bold,
@@ -166,7 +148,7 @@ class _ContenidoPageState extends State<ContenidoPage> {
         Container(
           padding: EdgeInsets.all(10.0),
           child: Html(
-            data: _getimg(contenido.contenido),
+            data: _getimg(curso.descripcion),
             customRender: {
               "img": (RenderContext context, Widget child, attributes, _) {
                 //File filetoimg = File(_.attributes['src']);
@@ -192,8 +174,8 @@ class _ContenidoPageState extends State<ContenidoPage> {
     ));
   }
 
-  String _getimg(String contenido) {
-    var img = parse(contenido.replaceAll(
+  String _getimg(String curso) {
+    var img = parse(curso.replaceAll(
         'http://www.escuelamesoamericana.org/media/',
         'http://www.escuelamesoamericana.org/media/'));
     return img.outerHtml;

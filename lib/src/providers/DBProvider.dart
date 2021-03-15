@@ -275,6 +275,20 @@ class DBProvider {
     return list;
   }
 
+  Future<List<Contenido>> filterContendiIdModulo(int id) async {
+    final db = await database;
+
+    String myQuery =
+        "SELECT * FROM Contenido WHERE modulo = $id ORDER BY orden ASC";
+
+    final res = await db.rawQuery(myQuery);
+
+    //final res = await db.query('Modulo', where: 'curso = ?', whereArgs: [id]);
+    List<Contenido> list =
+        res.isNotEmpty ? res.map((e) => Contenido.fromJson(e)).toList() : [];
+    return list;
+  }
+
   Future filterContenidoIdModulo(List<int> idsModulos) async {
     final db = await database;
     // int id = 1;

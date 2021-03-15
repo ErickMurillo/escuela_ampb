@@ -84,7 +84,7 @@ class _ModuloListState extends State<ModuloList> {
                 child: Column(
                   children: <Widget>[
                     introducionCurso(cursoid),
-                    _cardmodulo(listModulos, listContenido, context),
+                    _cardmodulo(listModulos, listContenido, context, cursoid),
                   ],
                 ),
               ),
@@ -183,19 +183,28 @@ class _ModuloListState extends State<ModuloList> {
                 padding: const EdgeInsets.symmetric(horizontal: 20),
                 child: Card(
                   color: Color(0xfff7d0b0),
-                  child: ExpansionTile(
-                    //trailing: Icon(Icons.arrow_drop_down_circle_sharp),
-
+                  child: ListTile(
+                    trailing: Icon(Icons.arrow_forward_ios_outlined),
                     title: Text("Introducción"),
-                    initiallyExpanded: true,
-                    children: [
-                      Container(
-                        color: Colors.white,
-                        child: Html(
-                          data: _getimg(curso.descripcion),
-                        ),
-                      )
-                    ],
+                    onTap: () =>
+                        Navigator.pushNamed(context, 'intro', arguments: curso),
+                    // onExpansionChanged: () => Navigator.pushNamed(
+                    //     context, 'contenido',
+                    //     arguments: curso.descripcion),
+
+                    // initiallyExpanded: true,
+                    // children: [
+                    //   Container(
+                    //     color: Colors.white,
+                    //     child: Html(
+                    //       data: _getimg(curso.descripcion),
+                    //     ),
+                    //   )
+                    //   InkWell(
+                    //     onTap: () => Navigator.pushNamed(context, 'intro',
+                    //         arguments: curso),
+                    //   ),
+                    // ],
                   ),
                 ),
               )
@@ -220,7 +229,8 @@ class _ModuloListState extends State<ModuloList> {
     return x;
   }
 
-  Widget _cardmodulo(List modulo, List contenido, BuildContext context) {
+  Widget _cardmodulo(
+      List modulo, List contenido, BuildContext context, int idCurso) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20),
       child: ListView.builder(
@@ -242,7 +252,7 @@ class _ModuloListState extends State<ModuloList> {
                   children: [
                     Column(
                       children: <Widget>[
-                        _prueba(modulo[index].id, contenido, context)
+                        _prueba(modulo[index].id, contenido, context, idCurso)
                       ],
                     ),
                   ]));
@@ -259,7 +269,7 @@ class _ModuloListState extends State<ModuloList> {
     );
   }
 
-  Widget _prueba(int idModulo, contenido, BuildContext context) {
+  Widget _prueba(int idModulo, contenido, BuildContext context, int cursoid) {
     List<Widget> lisItem = List<Widget>();
     for (var item in contenido) {
       if (item.modulo == idModulo) {
@@ -268,8 +278,8 @@ class _ModuloListState extends State<ModuloList> {
             trailing: Icon(Icons.arrow_forward),
             title: Text(item.titulo),
           ),
-          onTap: () =>
-              Navigator.pushNamed(context, 'contenido', arguments: item),
+          onTap: () => Navigator.pushNamed(context, 'contenido',
+              arguments: [item, cursoid]),
         ));
       }
     }
