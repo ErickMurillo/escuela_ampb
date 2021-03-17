@@ -65,10 +65,16 @@ class _FirstPageState extends State<FirstPage> {
                   child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
-                  Text("Cursos destacados", style: titleOptionStyle),
-                  GestureDetector(
-                    child: Text("ver todos", style: subtitleOptionStyle),
-                    onTap: () => Navigator.pushNamed(context, "lista_cursos"),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text("Cursos destacados", style: titleOptionStyle),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: GestureDetector(
+                      child: Text("ver todos", style: subtitleOptionStyle),
+                      onTap: () => Navigator.pushNamed(context, "lista_cursos"),
+                    ),
                   ),
                 ],
               )),

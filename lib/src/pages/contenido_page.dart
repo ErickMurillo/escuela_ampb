@@ -18,9 +18,6 @@ class ContenidoPage extends StatefulWidget {
 }
 
 class _ContenidoPageState extends State<ContenidoPage> {
-  Modulo _modulo;
-  Curso _curso;
-
   @override
   Widget build(BuildContext context) {
     List args = ModalRoute.of(context).settings.arguments;
@@ -32,20 +29,6 @@ class _ContenidoPageState extends State<ContenidoPage> {
         ),
         endDrawer: _drawer(args[1]),
         body: introducionCurso(detalleContenido));
-  }
-
-  _getModulo(int id) async {
-    var x = await DBProvider.db.getModuloId(id);
-    setState(() {
-      _modulo = x;
-    });
-  }
-
-  _getCurso(int id) async {
-    var x = await DBProvider.db.getCursoId(id);
-    setState(() {
-      _curso = x;
-    });
   }
 
   _drawer(int cursoid) => Drawer(

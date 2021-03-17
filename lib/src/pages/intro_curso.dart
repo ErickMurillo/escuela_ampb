@@ -10,16 +10,51 @@ import 'package:html/parser.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 
 class IntroPage extends StatefulWidget {
-  IntroPage({Key key}) : super(key: key);
+  final Curso curso;
+  IntroPage({Key key, this.curso}) : super(key: key);
 
   @override
   _IntroPageState createState() => _IntroPageState();
 }
 
 class _IntroPageState extends State<IntroPage> {
+  int activeStep = 0; // Initial step set to 0.
+
+  // OPTIONAL: can be set directly. default 2 to prevent errors
+  int dotCount = 2;
+
+  Curso intro;
+  List<Modulo> modulo = List<Modulo>();
+  List<Contenido> _contenidos;
+  List<int> idsModulos = List<int>();
+
+  @override
+  void initState() {
+    super.initState();
+    setState(() {});
+    _getObjects();
+  }
+
+  _getObjects() async {
+    intro = widget.curso;
+    List<Modulo> x = await DBProvider.db.filterModuloIdCurso(intro.id);
+
+    x.forEach((item) {
+      idsModulos.add(item.id);
+    });
+
+    List<Contenido> cont =
+        await DBProvider.db.filterContenidoIdModulo(idsModulos);
+
+    setState(() {
+      modulo = x;
+      _contenidos = cont;
+      dotCount = _contenidos.length + 1;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
-    Curso intro = ModalRoute.of(context).settings.arguments;
     return Scaffold(
       appBar: AppBar(
           title: Text(''),

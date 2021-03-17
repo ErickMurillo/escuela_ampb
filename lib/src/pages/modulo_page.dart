@@ -1,7 +1,7 @@
 import 'dart:io';
 
+import 'package:escuela_ampb/src/pages/intro_curso.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_html/flutter_html.dart';
 //import 'package:flutter_html/html_parser.dart';
 
 import 'package:html/parser.dart';
@@ -184,28 +184,33 @@ class _ModuloListState extends State<ModuloList> {
                 child: Card(
                   color: Color(0xfff7d0b0),
                   child: ListTile(
-                    trailing: Icon(Icons.arrow_forward_ios_outlined),
-                    title: Text("Introducción"),
-                    onTap: () =>
-                        Navigator.pushNamed(context, 'intro', arguments: curso),
-                    // onExpansionChanged: () => Navigator.pushNamed(
-                    //     context, 'contenido',
-                    //     arguments: curso.descripcion),
+                      trailing: Icon(Icons.arrow_forward_ios_outlined),
+                      title: Text("Introducción"),
+                      onTap: () =>
+                          // Navigator.pushNamed(context, 'intro', arguments: curso),
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => IntroPage(curso: curso)),
+                          )
+                      // onExpansionChanged: () => Navigator.pushNamed(
+                      //     context, 'contenido',
+                      //     arguments: curso.descripcion),
 
-                    // initiallyExpanded: true,
-                    // children: [
-                    //   Container(
-                    //     color: Colors.white,
-                    //     child: Html(
-                    //       data: _getimg(curso.descripcion),
-                    //     ),
-                    //   )
-                    //   InkWell(
-                    //     onTap: () => Navigator.pushNamed(context, 'intro',
-                    //         arguments: curso),
-                    //   ),
-                    // ],
-                  ),
+                      // initiallyExpanded: true,
+                      // children: [
+                      //   Container(
+                      //     color: Colors.white,
+                      //     child: Html(
+                      //       data: _getimg(curso.descripcion),
+                      //     ),
+                      //   )
+                      //   InkWell(
+                      //     onTap: () => Navigator.pushNamed(context, 'intro',
+                      //         arguments: curso),
+                      //   ),
+                      // ],
+                      ),
                 ),
               )
             ],
