@@ -9,24 +9,23 @@ import 'package:flutter_html/flutter_html.dart';
 import 'package:html/parser.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 
+import 'package:flutter_swiper/flutter_swiper.dart';
+
 class IntroPage extends StatefulWidget {
   final Curso curso;
-  IntroPage({Key key, this.curso}) : super(key: key);
+  final int swiperIndex;
+  IntroPage({Key key, this.curso, this.swiperIndex}) : super(key: key);
 
   @override
   _IntroPageState createState() => _IntroPageState();
 }
 
 class _IntroPageState extends State<IntroPage> {
-  int activeStep = 0; // Initial step set to 0.
-
-  // OPTIONAL: can be set directly. default 2 to prevent errors
-  int dotCount = 2;
-
   Curso intro;
   List<Modulo> modulo = List<Modulo>();
-  List<Contenido> _contenidos;
+  List<Contenido> _contenidos = List<Contenido>();
   List<int> idsModulos = List<int>();
+  SwiperController _controller = new SwiperController();
 
   @override
   void initState() {
@@ -44,17 +43,18 @@ class _IntroPageState extends State<IntroPage> {
     });
 
     List<Contenido> cont =
-        await DBProvider.db.filterContenidoIdModulo(idsModulos);
+        await DBProvider.db.filterContenidoIdModulos(idsModulos);
 
     setState(() {
       modulo = x;
       _contenidos = cont;
-      dotCount = _contenidos.length + 1;
     });
   }
 
   @override
   Widget build(BuildContext context) {
+    _controller.move(widget.swiperIndex);
+
     return Scaffold(
       appBar: AppBar(
           title: Text(''),
@@ -63,7 +63,7 @@ class _IntroPageState extends State<IntroPage> {
             icon: Icon(Icons.arrow_back),
             onPressed: () => Navigator.pop(context, false),
           )),
-      body: introducionCurso(intro),
+      body: _swiper(), //introducionCurso(intro),
       endDrawer: Drawer(
         child: ListView(
           padding: EdgeInsets.zero,
@@ -81,8 +81,10 @@ class _IntroPageState extends State<IntroPage> {
               title: Text('Introducción'),
               trailing: Icon(Icons.arrow_forward),
               onTap: () {
-                //   Navigator.pop(context);
-                Navigator.pushNamed(context, 'intro', arguments: intro);
+                _controller.move(0);
+                Navigator.pop(context);
+                // Navigator.pushNamed(context, 'intro', arguments: intro);
+                ;
               },
             ),
             Divider(),
@@ -112,7 +114,7 @@ class _IntroPageState extends State<IntroPage> {
                                   },
                                 ),
                                 children: <Widget>[
-                                  _contenido(modulo[index].id, intro.id)
+                                  _contenidoMenu(modulo[index].id, index + 1)
                                 ],
                               ),
                               Divider(),
@@ -129,10 +131,11 @@ class _IntroPageState extends State<IntroPage> {
     );
   }
 
-  _contenido(int id, int curso) => FutureBuilder(
+  _contenidoMenu(int id, int moduloIndex) => FutureBuilder(
         future: DBProvider.db.filterContendiIdModulo(id),
         builder: (context, content) {
           final List<Contenido> contenido = content.data;
+
           if (content.hasData) {
             return ListView.builder(
                 shrinkWrap: true,
@@ -145,8 +148,20 @@ class _IntroPageState extends State<IntroPage> {
                       ListTile(
                         trailing: Icon(Icons.arrow_forward),
                         title: Text(contenido[index].titulo),
-                        onTap: () => Navigator.pushNamed(context, 'contenido',
-                            arguments: [contenido[index], curso]),
+                        onTap: () {
+                          Navigator.pop(context);
+                          var posicion;
+                          if (contenido.length == 1) {
+                            posicion = moduloIndex + index;
+                          } else if (contenido.length > 1 && moduloIndex > 1) {
+                            posicion = moduloIndex + index + 1;
+                          } else {
+                            posicion = moduloIndex + index;
+                          }
+                          _controller.move(posicion);
+                          //   Navigator.pushNamed(context, 'contenido',
+                          //       arguments: [contenido[index], curso]
+                        },
                       ),
                     ],
                   );
@@ -214,5 +229,68 @@ class _IntroPageState extends State<IntroPage> {
         'http://www.escuelamesoamericana.org/media/',
         'http://www.escuelamesoamericana.org/media/'));
     return img.outerHtml;
+  }
+
+  Widget _swiper() {
+    return Swiper(
+      controller: _controller,
+      itemBuilder: (BuildContext context, int index) {
+        return index == 0 ? introducionCurso(intro) : contenidoCurso(index - 1);
+      },
+      loop: false,
+      itemCount: _contenidos.length + 1,
+      pagination: new SwiperPagination(
+          margin: new EdgeInsets.all(5.0),
+          builder: new DotSwiperPaginationBuilder(
+              color: Colors.grey, activeColor: Color(0xFF4f002b))),
+      control: new SwiperControl(),
+    );
+  }
+
+  Widget contenidoCurso(int index) {
+    return SingleChildScrollView(
+        child: Column(
+      children: [
+        Container(
+            padding: EdgeInsets.all(15.0),
+            child: Text(
+              _contenidos[index].titulo,
+              style: TextStyle(
+                  fontSize: 24.0,
+                  fontWeight: FontWeight.bold,
+                  color: Color(0xFF4f002b)),
+            )),
+        //SizedBox(height: 10.0),
+        Divider(
+          height: 5,
+          thickness: 3,
+        ),
+        Container(
+          padding: EdgeInsets.all(15.0),
+          child: Html(
+            data: _getimg(_contenidos[index].contenido),
+            customRender: {
+              "img": (RenderContext context, Widget child, attributes, _) {
+                //File filetoimg = File(_.attributes['src']);
+                String _imgBody = _.attributes['src'];
+
+                return Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 10),
+                  child: CachedNetworkImage(
+                    fit: BoxFit.fill,
+                    //   width: 1000,
+                    imageUrl: _imgBody,
+                    placeholder: (context, url) => Center(
+                      child: CircularProgressIndicator(),
+                    ),
+                    errorWidget: (context, url, error) => Icon(Icons.error),
+                  ),
+                );
+              },
+            },
+          ),
+        ),
+      ],
+    ));
   }
 }

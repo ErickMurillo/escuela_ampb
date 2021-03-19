@@ -36,6 +36,7 @@ class _ModuloListState extends State<ModuloList> {
     String cursoName = cursoDetalle[1];
 
     Future getFilterModulos() async {
+      Curso _curso = Curso();
       List<Modulo> filterModulos = List<Modulo>();
       List<Contenido> filterContenidos = List<Contenido>();
 
@@ -45,9 +46,11 @@ class _ModuloListState extends State<ModuloList> {
       });
 
       filterContenidos =
-          await DBProvider.db.filterContenidoIdModulo(idsModulos);
+          await DBProvider.db.filterContenidoIdModulos(idsModulos);
 
-      return [filterModulos, filterContenidos];
+      _curso = await DBProvider.db.getCursoId(cursoid);
+
+      return [filterModulos, filterContenidos, _curso];
     }
 
     return FutureBuilder(
@@ -84,7 +87,8 @@ class _ModuloListState extends State<ModuloList> {
                 child: Column(
                   children: <Widget>[
                     introducionCurso(cursoid),
-                    _cardmodulo(listModulos, listContenido, context, cursoid),
+                    _cardmodulo(
+                        listModulos, listContenido, context, snapshot.data[2]),
                   ],
                 ),
               ),
@@ -185,13 +189,17 @@ class _ModuloListState extends State<ModuloList> {
                   color: Color(0xfff7d0b0),
                   child: ListTile(
                       trailing: Icon(Icons.arrow_forward_ios_outlined),
-                      title: Text("Introducción"),
+                      title: Text("Introducción",
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              color: Color(0xff455a7d))),
                       onTap: () =>
                           // Navigator.pushNamed(context, 'intro', arguments: curso),
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => IntroPage(curso: curso)),
+                                builder: (context) =>
+                                    IntroPage(curso: curso, swiperIndex: 0)),
                           )
                       // onExpansionChanged: () => Navigator.pushNamed(
                       //     context, 'contenido',
@@ -235,7 +243,7 @@ class _ModuloListState extends State<ModuloList> {
   }
 
   Widget _cardmodulo(
-      List modulo, List contenido, BuildContext context, int idCurso) {
+      List modulo, List contenido, BuildContext context, Curso idCurso) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20),
       child: ListView.builder(
@@ -243,12 +251,18 @@ class _ModuloListState extends State<ModuloList> {
           final cardCurso = Card(
               color: Color(0xfff7d0b0),
               child: ExpansionTile(
-                  title: Text('${modulo[index].titulo}'),
+                  title: Text('${modulo[index].titulo}',
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          color: Color(0xff455a7d))),
                   subtitle: FutureBuilder(
                     future: _conteo(modulo[index].id),
                     builder: (context, snapshot) {
                       if (snapshot.hasData) {
-                        return Text(snapshot.data.toString() + ' Sesiones');
+                        return Text(
+                          snapshot.data.toString() + ' Sesiones',
+                          style: TextStyle(color: Colors.pinkAccent),
+                        );
                       } else {
                         return Text('');
                       }
@@ -274,18 +288,32 @@ class _ModuloListState extends State<ModuloList> {
     );
   }
 
-  Widget _prueba(int idModulo, contenido, BuildContext context, int cursoid) {
+  Widget _prueba(int idModulo, contenido, BuildContext context, Curso cursoid) {
     List<Widget> lisItem = List<Widget>();
+
     for (var item in contenido) {
       if (item.modulo == idModulo) {
         lisItem.add(GestureDetector(
-          child: ListTile(
-            trailing: Icon(Icons.arrow_forward),
-            title: Text(item.titulo),
-          ),
-          onTap: () => Navigator.pushNamed(context, 'contenido',
-              arguments: [item, cursoid]),
-        ));
+            child: ListTile(
+              trailing: Icon(Icons.arrow_forward),
+              title: Text(
+                item.titulo,
+                style: TextStyle(color: Color(0xff455a7d)),
+              ),
+            ),
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => IntroPage(
+                          curso: cursoid,
+                          swiperIndex: contenido.indexOf(item) + 1,
+                        )),
+              );
+            }
+            //   Navigator.pushNamed(context, 'contenido',
+            //       arguments: [item, cursoid]),
+            ));
       }
     }
     return Container(

@@ -247,6 +247,8 @@ class _GuardaPageState extends State<GuardaPage> {
             onSaved: (val) => setState(() => _nota.contenido = val),
           ),
           RaisedButton(
+              color: Color(0xFF4f002b),
+              textColor: Colors.white,
               child: Text("Guardar nota"),
               onPressed: () {
                 _onSubmit();

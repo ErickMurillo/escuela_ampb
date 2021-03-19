@@ -289,26 +289,15 @@ class DBProvider {
     return list;
   }
 
-  Future filterContenidoIdModulo(List<int> idsModulos) async {
+  Future filterContenidoIdModulos(List<int> idsModulos) async {
     final db = await database;
     // int id = 1;
 
-    String myQuery =
-        "SELECT * FROM Contenido WHERE modulo IN $idsModulos ORDER BY orden ASC";
+    String myQuery = "SELECT * FROM Contenido WHERE modulo IN $idsModulos";
     String limpiar = myQuery.replaceAll('[', '(');
     myQuery = limpiar.replaceAll(']', ')');
 
-    //print(myQuery);
-
     final res = await db.rawQuery(myQuery);
-
-    // List resprueba = res;
-
-    // for (var item in resprueba) {
-    //   print(item);
-    // }
-
-    //final res = await db.query('Contenido', where: 'modulo = ?', whereArgs: [id]);
     List<Contenido> list =
         res.isNotEmpty ? res.map((e) => Contenido.fromJson(e)).toList() : [];
     return list;

@@ -8,7 +8,6 @@ import 'package:escuela_ampb/src/pages/lista_curso_page.dart';
 import 'package:escuela_ampb/src/pages/notas_page.dart';
 import 'package:escuela_ampb/src/services/descarga_provider.dart';
 
-import 'package:escuela_ampb/src/pages/contenido_page.dart';
 import 'package:escuela_ampb/src/pages/modulo_page.dart';
 import 'package:provider/provider.dart';
 
@@ -45,7 +44,6 @@ class MyApp extends StatelessWidget {
         routes: {
           //   '/': (_) => FirstPage(), //FirstPage,HomePage
           'modulos': (_) => ModuloList(),
-          'contenido': (_) => ContenidoPage(),
           'lista_cursos': (_) => ListaCursoPage(),
           'buscador': (_) => ListaCursoPage(),
           'notas': (_) => NotasPage(),
