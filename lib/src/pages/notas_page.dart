@@ -1,3 +1,4 @@
+import 'package:escuela_ampb/src/searching/buscador.dart';
 import 'package:flutter/material.dart';
 import 'package:escuela_ampb/src/models/notas_model.dart';
 import 'package:escuela_ampb/src/providers/DBProvider.dart';
@@ -10,7 +11,7 @@ class NotasPage extends StatefulWidget {
 }
 
 class _NotasPageState extends State<NotasPage> {
-  int _selectedIndex = 2;
+  int _selectedIndex = 3;
   Future _notas;
 
   @override
@@ -55,10 +56,10 @@ class _NotasPageState extends State<NotasPage> {
               icon: Icon(Icons.home),
               label: 'Inicio',
             ),
-            // BottomNavigationBarItem(
-            //   icon: Icon(Icons.search),
-            //   label: 'Buscar',
-            // ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.search),
+              label: 'Buscar',
+            ),
             BottomNavigationBarItem(
               icon: Icon(Icons.list),
               label: 'Lista',
@@ -79,9 +80,13 @@ class _NotasPageState extends State<NotasPage> {
                 Navigator.pushNamed(context, "/");
                 break;
               case 1:
-                Navigator.pushNamed(context, "lista_cursos");
+                showSearch(
+                    context: context, delegate: BuscadorCurso('Buscar...'));
                 break;
               case 2:
+                Navigator.pushNamed(context, "lista_cursos");
+                break;
+              case 3:
                 Navigator.pushNamed(context, "notas");
                 break;
             }

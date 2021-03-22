@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:escuela_ampb/src/pages/intro_curso.dart';
+import 'package:escuela_ampb/src/searching/buscador.dart';
 import 'package:flutter/material.dart';
 //import 'package:flutter_html/html_parser.dart';
 
@@ -27,7 +28,7 @@ class _ModuloListState extends State<ModuloList> {
   dynamic resContenido;
   List<int> idsModulos = List<int>();
   final keyScaffold = GlobalKey<ScaffoldState>();
-  int _selectedIndex = 1;
+  int _selectedIndex = 2;
 
   @override
   Widget build(BuildContext context) {
@@ -99,10 +100,10 @@ class _ModuloListState extends State<ModuloList> {
                   icon: Icon(Icons.home),
                   label: 'Inicio',
                 ),
-                // BottomNavigationBarItem(
-                //   icon: Icon(Icons.search),
-                //   label: 'Buscar',
-                // ),
+                BottomNavigationBarItem(
+                  icon: Icon(Icons.search),
+                  label: 'Buscar',
+                ),
                 BottomNavigationBarItem(
                   icon: Icon(Icons.list),
                   label: 'Lista',
@@ -122,9 +123,13 @@ class _ModuloListState extends State<ModuloList> {
                     Navigator.pushNamed(context, "/");
                     break;
                   case 1:
-                    Navigator.pushNamed(context, "lista_cursos");
+                    showSearch(
+                        context: context, delegate: BuscadorCurso('Buscar...'));
                     break;
                   case 2:
+                    Navigator.pushNamed(context, "lista_cursos");
+                    break;
+                  case 3:
                     Navigator.pushNamed(context, "notas");
                     break;
                 }

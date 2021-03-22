@@ -101,10 +101,10 @@ class _FirstPageState extends State<FirstPage> {
               icon: Icon(Icons.home),
               label: 'Inicio',
             ),
-            // BottomNavigationBarItem(
-            //   icon: Icon(Icons.search),
-            //   label: 'Buscar',
-            // ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.search),
+              label: 'Buscar',
+            ),
             BottomNavigationBarItem(
               icon: Icon(Icons.list),
               label: 'Lista',
@@ -124,9 +124,13 @@ class _FirstPageState extends State<FirstPage> {
                 Navigator.pushNamed(context, "/");
                 break;
               case 1:
-                Navigator.pushNamed(context, "lista_cursos");
+                showSearch(
+                    context: context, delegate: BuscadorCurso('Buscar...'));
                 break;
               case 2:
+                Navigator.pushNamed(context, "lista_cursos");
+                break;
+              case 3:
                 Navigator.pushNamed(context, "notas");
                 break;
             }

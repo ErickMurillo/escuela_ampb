@@ -1,3 +1,4 @@
+import 'package:escuela_ampb/src/searching/buscador.dart';
 import 'package:escuela_ampb/src/widgets/menu_custom.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
@@ -9,7 +10,7 @@ import 'package:intl/intl.dart';
 
 // ignore: must_be_immutable
 class ListaCursoPage extends StatelessWidget {
-  int _selectedIndex = 1;
+  int _selectedIndex = 2;
   Future<List<Curso>> cursos = DBProvider.db.getTodosCursos();
 
   var newFormat = DateFormat("dd-MM-yyyy");
@@ -30,10 +31,10 @@ class ListaCursoPage extends StatelessWidget {
               icon: Icon(Icons.home),
               label: 'Inicio',
             ),
-            // BottomNavigationBarItem(
-            //   icon: Icon(Icons.search),
-            //   label: 'Buscar',
-            // ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.search),
+              label: 'Buscar',
+            ),
             BottomNavigationBarItem(
               icon: Icon(Icons.list),
               label: 'Lista',
@@ -53,9 +54,13 @@ class ListaCursoPage extends StatelessWidget {
                 Navigator.pushNamed(context, "/");
                 break;
               case 1:
-                Navigator.pushNamed(context, "lista_cursos");
+                showSearch(
+                    context: context, delegate: BuscadorCurso('Buscar...'));
                 break;
               case 2:
+                Navigator.pushNamed(context, "lista_cursos");
+                break;
+              case 3:
                 Navigator.pushNamed(context, "notas");
                 break;
             }

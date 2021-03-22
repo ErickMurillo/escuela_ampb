@@ -10,6 +10,7 @@ import 'package:html/parser.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 
 import 'package:flutter_swiper/flutter_swiper.dart';
+import 'package:delayed_display/delayed_display.dart';
 
 class IntroPage extends StatefulWidget {
   final Curso curso;
@@ -63,7 +64,10 @@ class _IntroPageState extends State<IntroPage> {
             icon: Icon(Icons.arrow_back),
             onPressed: () => Navigator.pop(context, false),
           )),
-      body: _swiper(), //introducionCurso(intro),
+      body: DelayedDisplay(
+        delay: Duration(milliseconds: 300),
+        child: _swiper(),
+      ), //introducionCurso(intro),
       endDrawer: Drawer(
         child: ListView(
           padding: EdgeInsets.zero,
