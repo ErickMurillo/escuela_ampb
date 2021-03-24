@@ -190,7 +190,7 @@ class _IntroPageState extends State<IntroPage> {
             child: Text(
               'Introducción',
               style: TextStyle(
-                  fontSize: 24.0,
+                  fontSize: 20.0,
                   fontWeight: FontWeight.bold,
                   color: Color(0xFF4f002b)),
             )),
@@ -260,7 +260,7 @@ class _IntroPageState extends State<IntroPage> {
             child: Text(
               _contenidos[index].titulo,
               style: TextStyle(
-                  fontSize: 24.0,
+                  fontSize: 20.0,
                   fontWeight: FontWeight.bold,
                   color: Color(0xFF4f002b)),
             )),

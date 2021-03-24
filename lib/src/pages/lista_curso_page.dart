@@ -92,7 +92,10 @@ class ListaCursoPage extends StatelessWidget {
                                 CircularProgressIndicator()),
                         backgroundColor: Colors.transparent,
                       ),
-                      title: Text(curso[index].titulo),
+                      title: Text(
+                        curso[index].titulo,
+                        style: TextStyle(fontSize: 14),
+                      ),
                       // subtitle: Html(
                       //     data: newFormat
                       //         .format(DateTime.parse(curso[index].fecha))),

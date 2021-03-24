@@ -280,7 +280,7 @@ class _FirstPageState extends State<FirstPage> {
                                 TextSpan(text: '-' + index.autor),
                               ],
                               style: TextStyle(
-                                  fontSize: 16.0,
+                                  fontSize: 14.0,
                                   color: Colors.white,
                                   fontWeight: FontWeight.bold),
                             )),
@@ -342,7 +342,7 @@ class _FirstPageState extends State<FirstPage> {
                                       index.titulo,
                                       style: TextStyle(
                                         color: Colors.white,
-                                        fontSize: 20.0,
+                                        fontSize: 16.0,
                                         fontWeight: FontWeight.bold,
                                       ),
                                     ),
@@ -455,7 +455,7 @@ class _FirstPageState extends State<FirstPage> {
                                     index.titulo,
                                     style: TextStyle(
                                       color: Colors.white,
-                                      fontSize: 20.0,
+                                      fontSize: 16.0,
                                       fontWeight: FontWeight.bold,
                                     ),
                                   ),

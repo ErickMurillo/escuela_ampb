@@ -196,6 +196,7 @@ class _ModuloListState extends State<ModuloList> {
                       trailing: Icon(Icons.arrow_forward_ios_outlined),
                       title: Text("Introducción",
                           style: TextStyle(
+                              fontSize: 14,
                               fontWeight: FontWeight.bold,
                               color: Color(0xff455a7d))),
                       onTap: () =>
@@ -258,6 +259,7 @@ class _ModuloListState extends State<ModuloList> {
               child: ExpansionTile(
                   title: Text('${modulo[index].titulo}',
                       style: TextStyle(
+                          fontSize: 14,
                           fontWeight: FontWeight.bold,
                           color: Color(0xff455a7d))),
                   subtitle: FutureBuilder(
@@ -303,7 +305,10 @@ class _ModuloListState extends State<ModuloList> {
               trailing: Icon(Icons.arrow_forward),
               title: Text(
                 item.titulo,
-                style: TextStyle(color: Color(0xff455a7d)),
+                style: TextStyle(
+                  color: Color(0xff455a7d),
+                  fontSize: 14,
+                ),
               ),
             ),
             onTap: () {
