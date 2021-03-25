@@ -36,7 +36,8 @@ class DBProvider {
           'imagen TEXT,'
           'descripcion TEXT,'
           'fecha TEXT,'
-          'activo TEXT'
+          'activo TEXT,'
+          'destacado TEXT'
           ')');
       await db.execute('CREATE TABLE Modulo('
           'id INTEGER PRIMARY KEY,'
@@ -206,7 +207,20 @@ class DBProvider {
   //Todos los resgistros
   Future<List<Curso>> getTodosCursos() async {
     final db = await database;
-    final res = await db.query('Curso');
+    final res = await db.query('Curso', where: 'activo=?', whereArgs: [
+      'true',
+    ]);
+
+    List<Curso> list =
+        res.isNotEmpty ? res.map((e) => Curso.fromJson(e)).toList() : [];
+
+    return list;
+  }
+
+  Future<List<Curso>> getTodosCursosDestacados() async {
+    final db = await database;
+    final res = await db.query('Curso',
+        where: 'activo=? AND destacado=?', whereArgs: ['true', 'true']);
 
     List<Curso> list =
         res.isNotEmpty ? res.map((e) => Curso.fromJson(e)).toList() : [];

@@ -32,7 +32,7 @@ class _FirstPageState extends State<FirstPage> {
       dbFrases = DBProvider.db.getTodosReflexiones();
 
   Future<List<Curso>> _fetchDestacados() async =>
-      dbCursosDestacados = DBProvider.db.getTodosCursos();
+      dbCursosDestacados = DBProvider.db.getTodosCursosDestacados();
 
   static const TextStyle titleOptionStyle = TextStyle(
       color: Colors.black45, fontSize: 18, fontWeight: FontWeight.bold);
