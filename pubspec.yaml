@@ -38,7 +38,6 @@ dependencies:
   image_downloader: ^0.20.1
   http:
   carousel_slider: ^3.0.0
-  flutter_launcher_icons: "^0.8.1"
   connectivity: ^2.0.2
   google_fonts: ^1.1.2
   flutter_swiper: ^1.1.6
@@ -47,6 +46,7 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  flutter_launcher_icons: "^0.8.1"
 
 flutter_icons:
   android: "launcher_icon"
